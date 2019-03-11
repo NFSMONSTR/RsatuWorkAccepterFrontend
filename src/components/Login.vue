@@ -22,8 +22,6 @@
           <button class="btn btn-light btn-block btn-sm" type="submit" style="margin:3px;margin-top:13px;">
             Войти
           </button>
-          <a class="btn btn-light btn-block btn-sm" role="button" href="http://app.redforester.com/signup"
-             style="margin:3px;margin-top:13px;">Зарегистрироваться&nbsp;</a></fieldset>
       </form>
     </div>
   </div>
