@@ -1,27 +1,64 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import DevMenu from '@/components/DevMenu'
+import store from '../store'
+import Profile from '@/components/Profile'
+import UsersList from '@/components/UsersList'
 
 Vue.use(Router)
 
-export default new Router({
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isLoggedIn) {
+    next()
+    return
+  }
+  next('/')
+}
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isLoggedIn) {
+    next()
+    return
+  }
+  next('/login')
+}
+
+let router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'root',
+      component: DevMenu,
+      beforeEnter: ifAuthenticated
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      beforeEnter: ifNotAuthenticated
     },
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: Register,
+      beforeEnter: ifNotAuthenticated
+    },
+    {
+      path: '/profile/:id',
+      name: 'profile',
+      component: Profile,
+      beforeEnter: ifAuthenticated,
+      props: true
+    },
+    {
+      path: '/users/',
+      name: 'users_list',
+      component: UsersList,
+      beforeEnter: ifAuthenticated
     }
   ]
 })
+
+export default router

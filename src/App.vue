@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavBar brand="Принималка лаб" :links="links"></NavBar>
-    <main role="main" class="px-4">
+    <main role="main" class="p-4">
       <transition>
         <router-view></router-view>
       </transition>
@@ -16,15 +16,21 @@ export default {
   components: {NavBar},
   data: function () {
     return {
-      links: [
-        { id: 0, name: 'Лабораторные работы', link: 'HelloWorld', router: true }
-        /*
-        { id: 1, name: 'Home', link: 'MainContainer', router: true, params: { header: 'test' } },
-        { id: 2, name: 'test', link: 'https://google.com', router: false },
-        { id: 3, name: 'hello', link: 'HelloWorld', router: true },
-        { id: 4, name: 'cont', link: 'MainContainer', router: true, params: { header: 'test' } }
-        */
-      ]
+      links: () => {
+        if (this.$store.getters.isLoggedIn) {
+          return [
+            { id: 0, name: 'Лабораторные работы', link: '/', router: true }
+            /*
+            { id: 1, name: 'Home', link: 'MainContainer', router: true, params: { header: 'test' } },
+            { id: 2, name: 'test', link: 'https://google.com', router: false },
+            { id: 3, name: 'hello', link: 'HelloWorld', router: true },
+            { id: 4, name: 'cont', link: 'MainContainer', router: true, params: { header: 'test' } }
+            */
+          ]
+        } else {
+          return []
+        }
+      }
     }
   },
   mounted: function () {

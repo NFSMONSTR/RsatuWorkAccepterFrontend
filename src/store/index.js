@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import {API_URL} from '@/util/api'
 Vue.use(Vuex)
 
-const API_ENDPOINT = 'http://127.0.0.1:8000/api'
+const API_ENDPOINT = API_URL
 
 async function apiCall (token, method, url, data) {
   try {
@@ -64,6 +65,9 @@ export default new Vuex.Store({
     },
     isLoggedIn: (state) => {
       return state.isLoggedIn
+    },
+    userId: (state) => {
+      return state.tokenInfo.user_id
     }
   },
   actions: {
@@ -100,6 +104,9 @@ export default new Vuex.Store({
     },
     GET_USER_INFO: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/user/' + payload.toString() + '/', {}).then()
+    },
+    GET_USERS: async (context) => {
+      return apiCall(context.getters.token, 'get', '/user/', {}).then()
     }
     /*
     UPDATE_USER_INFO: async (context) => {
