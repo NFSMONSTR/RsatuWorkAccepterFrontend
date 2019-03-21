@@ -1,71 +1,103 @@
 <template>
-  <div class="container text-left" @submit.prevent="login">
-    <div class="bg-dark" style="padding:55px;margin:56px;margin-left:25%;margin-bottom:0px;margin-right:25%;margin-top:16%;padding-left:5%;padding-right:5%;">
-      <form style="padding:0px;padding-top:0;margin-right:0;margin-left:0;" method="post">
-        <fieldset style="padding:0;">
-          <legend class="text-white">Вход</legend>
-          <alerts ref="alerts"></alerts>
-          <small class="form-text text-white-50">Логин:</small>
-          <input class="form-control"
-                 type="text"
-                 name="username"
-                 v-model="username"
-                 required
-          >
-          <small class="form-text text-white-50">Пароль:</small>
-          <input class="form-control border-light"
-                 type="password"
-                 name="password"
-                 v-model="password"
-                 required
-          >
-          <button class="btn btn-light btn-block btn-sm" type="submit" style="margin:3px;margin-top:13px;">
-            Войти
-          </button>
-      </form>
-    </div>
-  </div>
+  <v-content>
+    <v-container fluid fill-height>
+      <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md4>
+          <v-card class="elevation-12">
+            <v-toolbar dark color="primary">
+              <v-toolbar-title>Вход</v-toolbar-title>
+            </v-toolbar>
+            <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+            >
+              <v-card-text>
+                <v-alert
+                  :value="error_message !== ''"
+                  type="error"
+                >
+                  {{ error_message }}
+                </v-alert>
+
+                <v-text-field
+                  v-model="username"
+                  :rules="rules"
+                  label="Логин"
+                  required
+                  prepend-icon="person"
+                ></v-text-field>
+
+                <v-text-field
+                  v-model="password"
+                  :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                  :rules="rules"
+                  :type="showPassword ? 'text' : 'password'"
+                  label="Пароль"
+                  class="input-group--focused"
+                  @click:append="showPassword = !showPassword"
+                  required
+                  prepend-icon="lock"
+                ></v-text-field>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  block
+                  :disabled="!valid"
+                  color="success"
+                  @click="validate"
+                >
+                  Войти
+                </v-btn>
+              </v-card-actions>
+            </v-form>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
 import Alerts from './Alerts'
+
 export default {
   name: 'Login',
   components: {Alerts},
   data: function () {
     return {
+      valid: true,
       username: '',
-      password: ''
+      showPassword: false,
+      password: '',
+      error_message: '',
+      rules: [
+        v => !!v || 'Это поле обязательно'
+      ]
     }
   },
   methods: {
-    login: function () {
-      this.$store.dispatch('LOGIN', { 'username': this.username, 'password': this.password }).then(() => {
+    login () {
+      this.$store.dispatch('LOGIN', {'username': this.username, 'password': this.password}).then(() => {
+        this.error_message = ''
         this.$router.push('/')
       }).catch((error) => {
         console.error(error)
-        this.$refs.alerts.push_message_danger('Неправильный логин или пароль')
+        this.error_message = 'Неправильный логин или пароль'
       })
+    },
+    validate () {
+      if (this.$refs.form.validate()) {
+        this.login()
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-  .form-control:focus {
-    border-color: #ffffff;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 255, 255, 0.6);
-  }
-  .btn.btn-light.btn-block.btn-sm {
-    border-radius:15px;
-  }
-
-  div {
-    border-radius:5px;
-  }
-
-  .btn.btn-dark.btn-block.btn-sm {
-    border-radius:15px;
-  }
-
+div {
+  border-radius: 5px;
+}
 </style>

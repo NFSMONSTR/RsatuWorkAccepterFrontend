@@ -1,12 +1,12 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <NavBar brand="Принималка лаб" :links="links"></NavBar>
     <main role="main" class="p-4">
       <transition>
         <router-view></router-view>
       </transition>
     </main>
-  </div>
+  </v-app>
 </template>
 
 <script>

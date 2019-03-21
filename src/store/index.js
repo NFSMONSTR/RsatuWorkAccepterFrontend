@@ -85,7 +85,7 @@ export default new Vuex.Store({
       try {
         return await axios.post(API_ENDPOINT + '/user/', payload)
       } catch (error) {
-        return error.data
+        return error.response
       }
     },
     UPDATE_TOKEN: async (context) => {
@@ -94,7 +94,6 @@ export default new Vuex.Store({
           let result = await apiCall(context.getters.token, 'get', /auth/, {})
           context.commit('SET_TOKEN', result.data.token)
         } catch (error) {
-          console.error(error)
           await context.dispatch('LOGOUT')
         }
       }
