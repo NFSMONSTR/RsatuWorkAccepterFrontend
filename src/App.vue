@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <NavBar brand="Принималка лаб" :links="links"></NavBar>
+    <NavBar></NavBar>
     <main role="main" class="p-4">
       <transition>
         <router-view></router-view>
