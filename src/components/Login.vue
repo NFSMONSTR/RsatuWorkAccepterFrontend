@@ -60,11 +60,8 @@
 </template>
 
 <script>
-import Alerts from './Alerts'
-
 export default {
   name: 'Login',
-  components: {Alerts},
   data: function () {
     return {
       valid: true,

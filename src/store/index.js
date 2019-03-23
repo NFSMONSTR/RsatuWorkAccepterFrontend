@@ -37,6 +37,12 @@ export default new Vuex.Store({
       user_id: 0,
       salt: 0,
       expires: 0
+    },
+    user: {
+      id: 0,
+      username: 'No connection',
+      first_name: 'No connection',
+      second_name: 'No connection'
     }
   },
   mutations: {
@@ -68,6 +74,9 @@ export default new Vuex.Store({
     },
     userId: (state) => {
       return state.tokenInfo.user_id
+    },
+    user: (state) => {
+      return state.user
     }
   },
   actions: {
@@ -80,6 +89,7 @@ export default new Vuex.Store({
         }
       })
       context.commit('SET_TOKEN', result.data.token)
+      await context.dispatch('UPDATE_USER_INFO')
     },
     REGISTER: async (context, payload) => {
       try {
@@ -93,6 +103,7 @@ export default new Vuex.Store({
         try {
           let result = await apiCall(context.getters.token, 'get', /auth/, {})
           context.commit('SET_TOKEN', result.data.token)
+          await context.dispatch('UPDATE_USER_INFO')
         } catch (error) {
           await context.dispatch('LOGOUT')
         }
@@ -106,16 +117,17 @@ export default new Vuex.Store({
     },
     GET_USERS: async (context) => {
       return apiCall(context.getters.token, 'get', '/user/', {}).then()
-    }
-    /*
+    },
     UPDATE_USER_INFO: async (context) => {
-      let result = await context.dispatch('GET_USER_INFO', context.state.user.id)
+      let result = await context.dispatch('GET_USER_INFO', context.getters.userId)
       if (result.status === 200) {
         context.commit('UPDATE_USER_INFO', result.data)
       } else {
         console.error(result)
       }
+    },
+    GET_WORKS: async (context) => {
+      return apiCall(context.getters.token, 'get', '/work/', {}).then()
     }
-    */
   }
 })

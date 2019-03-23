@@ -1,21 +1,24 @@
 <template>
   <v-app id="app">
-    <NavBar></NavBar>
-    <main role="main" class="p-4">
-      <transition>
+    <NavMenu :drawer="drawer" v-if="$store.getters.isLoggedIn"></NavMenu>
+    <NavBar v-on:change_drawer="drawer = !drawer"></NavBar>
+    <v-content>
+      <v-fade-transition mode="out-in">
         <router-view></router-view>
-      </transition>
-    </main>
+      </v-fade-transition>
+    </v-content>
   </v-app>
 </template>
 
 <script>
 import NavBar from './components/NavBar'
+import NavMenu from '@/components/NavMenu'
 export default {
   name: 'App',
-  components: {NavBar},
+  components: {NavMenu, NavBar},
   data: function () {
     return {
+      drawer: false,
       links: () => {
         if (this.$store.getters.isLoggedIn) {
           return [

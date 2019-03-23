@@ -1,5 +1,7 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <v-toolbar dark color="primary">
+<template>
+
+  <v-toolbar dark color="primary" clipped-left fixed app>
+    <v-toolbar-side-icon @click.stop="$emit('change_drawer')" v-if="$store.getters.isLoggedIn"></v-toolbar-side-icon>
     <v-toolbar-title>Система сдачи лабораторных работ</v-toolbar-title>
 
     <v-spacer></v-spacer>
@@ -16,9 +18,11 @@
           </v-btn>
         </template>
         <v-list>
+
           <v-list-tile @click="logout">
             <v-list-tile-title>Выйти</v-list-tile-title>
           </v-list-tile>
+
         </v-list>
       </v-menu>
     </v-toolbar-items>
@@ -30,11 +34,13 @@
     </v-toolbar-items>
 
   </v-toolbar>
+
 </template>
 
 <script>
 export default {
   name: 'NavBar',
+  props: ['drawer'],
   methods: {
     logout: function () {
       this.$store.dispatch('LOGOUT').then(() => {
@@ -46,7 +52,4 @@ export default {
 </script>
 
 <style scoped>
-  .v-btn--router {
-    text-decoration: none;
-  }
 </style>

@@ -1,26 +1,16 @@
 <template>
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">username</th>
-          <th scope="col">first_name</th>
-          <th scope="col">second_name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="user in users" :key="user.id">
-          <th scope="row">{{ user.id }}</th>
-          <td>{{ user.username }}</td>
-          <td>{{ user.first_name }}</td>
-          <td>{{ user.second_name }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <v-data-table
+    :headers="headers"
+    :items="users"
+    class="elevation-1"
+  >
+    <template v-slot:items="props">
+      <td>{{ props.item.id }}</td>
+      <td>{{ props.item.username }}</td>
+      <td>{{ props.item.first_name }}</td>
+      <td>{{ props.item.second_name }}</td>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
@@ -29,6 +19,12 @@ export default {
   props: ['id'],
   data: function () {
     return {
+      headers: [
+        { text: 'id', value: 'id' },
+        { text: 'username', value: 'username' },
+        { text: 'first_name', value: 'first_name' },
+        { text: 'second_name', value: 'second_name' }
+      ],
       users: [
         {
           id: 0,
@@ -48,5 +44,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

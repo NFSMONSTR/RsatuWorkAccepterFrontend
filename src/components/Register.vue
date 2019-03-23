@@ -119,10 +119,8 @@
 </template>
 
 <script>
-import Alerts from './Alerts'
 export default {
   name: 'Register',
-  components: {Alerts},
   data: function () {
     return {
       valid: true,

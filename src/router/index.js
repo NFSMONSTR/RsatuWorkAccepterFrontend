@@ -6,6 +6,8 @@ import DevMenu from '@/components/DevMenu'
 import store from '../store'
 import Profile from '@/components/Profile'
 import UsersList from '@/components/UsersList'
+import Admin from '@/components/Admin'
+import WorksList from '@/components/WorksList'
 
 Vue.use(Router)
 
@@ -18,6 +20,14 @@ const ifNotAuthenticated = (to, from, next) => {
 }
 
 const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isLoggedIn) {
+    next()
+    return
+  }
+  next('/login')
+}
+
+const ifAdmin = (to, from, next) => {
   if (store.getters.isLoggedIn) {
     next()
     return
@@ -57,6 +67,18 @@ let router = new Router({
       name: 'users_list',
       component: UsersList,
       beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/works/',
+      name: 'works_list',
+      component: WorksList,
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/admin/',
+      name: 'admin',
+      component: Admin,
+      beforeEnter: ifAdmin
     }
   ]
 })
