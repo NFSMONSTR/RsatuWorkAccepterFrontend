@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
-import DevMenu from '@/components/DevMenu'
 import store from '../store'
 import Profile from '@/components/Profile'
 import UsersList from '@/components/UsersList'
@@ -39,9 +38,9 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: 'root',
-      component: DevMenu,
-      beforeEnter: ifAuthenticated
+      redirect: {
+        name: 'works_list'
+      }
     },
     {
       path: '/login',
