@@ -1,6 +1,6 @@
 <template>
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
+  <div>
+    <div>
       <table class="table">
         <thead>
         <tr>

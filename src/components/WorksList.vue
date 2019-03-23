@@ -1,10 +1,10 @@
 <template>
-  <v-list two-line>
+  <v-list three-line>
     <template v-for="(item, index) in works">
 
       <v-list-tile
-        :key="item.id"
-        @click=""
+        :key="index"
+        @click="false"
       >
         <v-list-tile-content>
           <v-list-tile-title>{{ item.subject }}</v-list-tile-title>
