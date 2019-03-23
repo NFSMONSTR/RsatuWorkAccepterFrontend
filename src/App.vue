@@ -18,22 +18,7 @@ export default {
   components: {NavMenu, NavBar},
   data: function () {
     return {
-      drawer: false,
-      links: () => {
-        if (this.$store.getters.isLoggedIn) {
-          return [
-            { id: 0, name: 'Лабораторные работы', link: '/', router: true }
-            /*
-            { id: 1, name: 'Home', link: 'MainContainer', router: true, params: { header: 'test' } },
-            { id: 2, name: 'test', link: 'https://google.com', router: false },
-            { id: 3, name: 'hello', link: 'HelloWorld', router: true },
-            { id: 4, name: 'cont', link: 'MainContainer', router: true, params: { header: 'test' } }
-            */
-          ]
-        } else {
-          return []
-        }
-      }
+      drawer: false
     }
   },
   mounted: function () {
