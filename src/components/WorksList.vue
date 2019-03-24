@@ -4,7 +4,7 @@
 
       <v-list-tile
         :key="index"
-        @click="false"
+        :to="{ name: 'work', params: { id: item.id }}"
       >
         <v-list-tile-content>
           <v-list-tile-title>{{ item.subject }}</v-list-tile-title>

@@ -1,7 +1,7 @@
 <template>
   <v-app id="app">
-    <NavMenu :drawer="drawer" v-if="$store.getters.isLoggedIn"></NavMenu>
-    <NavBar v-on:change_drawer="drawer = !drawer"></NavBar>
+    <NavMenu v-if="$store.getters.isLoggedIn"></NavMenu>
+    <NavBar></NavBar>
     <v-content>
       <v-fade-transition mode="out-in">
         <router-view></router-view>
@@ -16,11 +16,6 @@ import NavMenu from '@/components/NavMenu'
 export default {
   name: 'App',
   components: {NavMenu, NavBar},
-  data: function () {
-    return {
-      drawer: false
-    }
-  },
   mounted: function () {
     let self = this
     if ((self.$store.getters.isLoggedIn) && (self.$store.getters.tokenLifetime - Math.floor(Date.now() / 1000) < 100)) {

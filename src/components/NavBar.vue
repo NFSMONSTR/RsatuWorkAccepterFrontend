@@ -1,7 +1,7 @@
 <template>
 
   <v-toolbar dark color="primary" clipped-left fixed app>
-    <v-toolbar-side-icon @click.stop="$emit('change_drawer')" v-if="$store.getters.isLoggedIn"></v-toolbar-side-icon>
+    <v-toolbar-side-icon @click.stop="$store.state.globalNavigationDrawer = !$store.state.globalNavigationDrawer" v-if="$store.getters.isLoggedIn"></v-toolbar-side-icon>
     <v-toolbar-title>Система сдачи лабораторных работ</v-toolbar-title>
 
     <v-spacer></v-spacer>

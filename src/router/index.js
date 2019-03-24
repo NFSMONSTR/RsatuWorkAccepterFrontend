@@ -7,6 +7,8 @@ import Profile from '@/components/Profile'
 import UsersList from '@/components/UsersList'
 import Admin from '@/components/Admin'
 import WorksList from '@/components/WorksList'
+import AddWork from '@/components/AddWork'
+import Work from '@/components/Work'
 
 Vue.use(Router)
 
@@ -26,6 +28,13 @@ const ifAuthenticated = (to, from, next) => {
   next('/login')
 }
 
+const ifTutor = (to, from, next) => {
+  if (store.getters.isLoggedIn) {
+    next()
+    return
+  }
+  next('/login')
+}
 const ifAdmin = (to, from, next) => {
   if (store.getters.isLoggedIn) {
     next()
@@ -68,16 +77,29 @@ let router = new Router({
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/works/',
+      path: '/work/',
       name: 'works_list',
       component: WorksList,
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/admin/',
+      path: '/work/:id',
+      name: 'work',
+      component: Work,
+      beforeEnter: ifAuthenticated,
+      props: true
+    },
+    {
+      path: '/admin',
       name: 'admin',
       component: Admin,
       beforeEnter: ifAdmin
+    },
+    {
+      path: '/add_work',
+      name: 'add_work',
+      component: AddWork,
+      beforeEnter: ifTutor
     }
   ]
 })

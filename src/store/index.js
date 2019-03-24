@@ -31,6 +31,7 @@ function getTokenInfo (token) {
 
 export default new Vuex.Store({
   state: {
+    globalNavigationDrawer: false,
     isLoggedIn: !!localStorage.getItem('token'),
     token: localStorage.getItem('token') || '',
     tokenInfo: getTokenInfo(this.token) || {
@@ -128,6 +129,9 @@ export default new Vuex.Store({
     },
     GET_WORKS: async (context) => {
       return apiCall(context.getters.token, 'get', '/work/', {}).then()
+    },
+    GET_WORK: async (context, payload) => {
+      return apiCall(context.getters.token, 'get', '/work/' + payload.toString() + '/', {}).then()
     }
   }
 })

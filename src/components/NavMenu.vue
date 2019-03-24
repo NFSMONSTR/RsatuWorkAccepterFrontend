@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     fixed
-    v-model="drawer"
+    v-model="$store.state.globalNavigationDrawer"
     clipped
     app
   >
@@ -15,7 +15,8 @@
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <v-list-tile-title>{{ this.$store.getters.user.first_name }} {{ this.$store.getters.user.second_name }}</v-list-tile-title>
+            <v-list-tile-title>{{ this.$store.getters.user.first_name }} {{ this.$store.getters.user.second_name }}
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -33,12 +34,42 @@
           <v-list-tile-title>Доступные лабораторные работы</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-    </v-list>
 
-    <!-- if admin -->
-    <v-list class="pt-0" dense>
-      <v-divider></v-divider>
+      <!-- if prepod -->
+      <v-list-group
+        prepend-icon="account_circle"
+        value="true"
+      >
+        <template v-slot:activator>
+          <v-list-tile>
+            <v-list-tile-title>Преподавателю</v-list-tile-title>
+          </v-list-tile>
+        </template>
+        <v-list-group
+          no-action
+          sub-group
+          value="true"
+        >
+          <template v-slot:activator>
+            <v-list-tile>
+              <v-list-tile-title>Лабораторные работы</v-list-tile-title>
+            </v-list-tile>
+          </template>
 
+          <v-list-tile
+            v-for="(tutor, i) in tutors_works"
+            :key="i"
+            :to="tutor[2]"
+          >
+            <v-list-tile-title v-text="tutor[0]"></v-list-tile-title>
+            <v-list-tile-action>
+              <v-icon v-text="tutor[1]"></v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list-group>
+      </v-list-group>
+
+      <!-- if admin -->
       <v-list-tile :to="{name: 'admin'}">
         <v-list-tile-action>
           <v-icon>gavel</v-icon>
@@ -48,6 +79,7 @@
           <v-list-tile-title>Админ панель</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+
     </v-list>
 
   </v-navigation-drawer>
@@ -56,7 +88,14 @@
 <script>
 export default {
   name: 'NavMenu',
-  props: ['drawer']
+  data: function () {
+    return {
+      tutors_works: [
+        ['Добавть работу', 'note_add', { name: 'add_work' }],
+        ['Список моих работ', 'assignment', { name: 'works_list' }]
+      ]
+    }
+  }
 }
 </script>
 
