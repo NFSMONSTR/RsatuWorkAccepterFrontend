@@ -133,6 +133,9 @@ export default new Vuex.Store({
     GET_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/work/' + payload.toString() + '/', {}).then()
     },
+    DELETE_WORK: async (context, payload) => {
+      return apiCall(context.getters.token, 'delete', '/work/' + payload.toString() + '/', {}).then()
+    },
     GET_ATTACHMENTS: async (context) => {
       return apiCall(context.getters.token, 'get', '/attachment/', {}).then((result) => {
         for (let i = 0; i < result.data.length; i++) {
