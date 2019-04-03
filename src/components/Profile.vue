@@ -1,26 +1,19 @@
 <template>
-  <div>
-    <div>
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">username</th>
-          <th scope="col">first_name</th>
-          <th scope="col">second_name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <th scope="row">{{ user.id }}</th>
-          <td>{{ user.username }}</td>
-          <td>{{ user.first_name }}</td>
-          <td>{{ user.second_name }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <v-card flat>
+    <v-card-text>
+      <v-layout align-center mb-3>
+        <v-avatar class="mr-3" size="48" tile="false"><img src="https://vuetifyjs.com/apple-touch-icon-180x180.png"></v-avatar>
+        <v-container fluid>
+          <v-layout row>
+            <strong class="title">{{ user.first_name }} {{ user.second_name }}</strong>
+          </v-layout>
+          <v-layout row>
+            {{ user.username }}
+          </v-layout>
+        </v-container>
+      </v-layout>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
