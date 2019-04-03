@@ -10,6 +10,7 @@ import WorksList from '@/components/WorksList'
 import AddWork from '@/components/AddWork'
 import Work from '@/components/Work'
 import AttachmentsList from '@/components/AttachmentsList'
+import AddAttachment from '@/components/AddAttachment'
 
 Vue.use(Router)
 
@@ -94,6 +95,12 @@ let router = new Router({
       path: '/attachments/',
       name: 'attachments_list',
       component: AttachmentsList,
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/add_attachment',
+      name: 'add_attachment',
+      component: AddAttachment,
       beforeEnter: ifAuthenticated
     },
     {

@@ -120,6 +120,7 @@ export default {
         ['Список моих работ', 'assignment', { name: 'works_list' }]
       ],
       docs: [
+        ['Добавить документ', 'attach_file', { name: 'add_attachment' }],
         ['Список документов', 'attachment', { name: 'attachments_list' }]
       ]
     }

@@ -17,7 +17,7 @@ async function apiCall (token, method, url, data) {
       data: data
     })
   } catch (error) {
-    return error
+    return error.response
   }
 }
 
@@ -136,13 +136,17 @@ export default new Vuex.Store({
     DELETE_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'delete', '/work/' + payload.toString() + '/', {}).then()
     },
+    ADD_ATTACHMENT: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/attachment/', payload).then()
+    },
     GET_ATTACHMENTS: async (context) => {
       return apiCall(context.getters.token, 'get', '/attachment/', {}).then((result) => {
-        for (let i = 0; i < result.data.length; i++) {
+        for (let i = 0; i < result.data.attachments.length; i++) {
           if (!result.data.attachments[i].is_link) {
             result.data.attachments[i].link = CDN_URL + result.data.attachments[i].link
           }
         }
+        console.log(result.data)
         return result
       }).then()
     },

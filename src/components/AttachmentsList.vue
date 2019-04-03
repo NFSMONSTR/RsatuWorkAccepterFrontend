@@ -33,6 +33,7 @@ export default {
   mounted () {
     this.$store.dispatch('GET_ATTACHMENTS').then((result) => {
       this.attachments = result.data.attachments
+      console.log(result.data)
     })
   }
 }
