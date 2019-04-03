@@ -22,8 +22,7 @@
       <v-list v-if="work.attachments.length>0">
         <v-list-tile v-for="attachment in work.attachments" :key="attachment.id">
           <v-list-tile-content>
-            <v-btn v-if="attachment.is_link" :href="attachment.link">{{ attachment.name }}</v-btn>
-            <v-btn v-else :href="attachment.link">{{ attachment.name }}</v-btn>
+            <v-btn :href="attachment.link">{{ attachment.name }}</v-btn>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>

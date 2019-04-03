@@ -9,6 +9,7 @@ import Admin from '@/components/Admin'
 import WorksList from '@/components/WorksList'
 import AddWork from '@/components/AddWork'
 import Work from '@/components/Work'
+import AttachmentsList from '@/components/AttachmentsList'
 
 Vue.use(Router)
 
@@ -88,6 +89,12 @@ let router = new Router({
       component: Work,
       beforeEnter: ifAuthenticated,
       props: true
+    },
+    {
+      path: '/attachments/',
+      name: 'attachments_list',
+      component: AttachmentsList,
+      beforeEnter: ifAuthenticated
     },
     {
       path: '/admin',

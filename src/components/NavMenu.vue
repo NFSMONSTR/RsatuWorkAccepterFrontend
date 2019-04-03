@@ -67,6 +67,31 @@
             </v-list-tile-action>
           </v-list-tile>
         </v-list-group>
+
+        <v-list-group
+          no-action
+          sub-group
+          value="true"
+        >
+          <template v-slot:activator>
+            <v-list-tile>
+              <v-list-tile-title>Документы</v-list-tile-title>
+            </v-list-tile>
+          </template>
+
+          <v-list-tile
+            v-for="(x, i) in docs"
+            :key="i"
+            :to="x[2]"
+          >
+            <v-list-tile-title v-text="x[0]"></v-list-tile-title>
+            <v-list-tile-action>
+              <v-icon v-text="x[1]"></v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+
+        </v-list-group>
+
       </v-list-group>
 
       <!-- if admin -->
@@ -93,6 +118,9 @@ export default {
       tutors_works: [
         ['Добавть работу', 'note_add', { name: 'add_work' }],
         ['Список моих работ', 'assignment', { name: 'works_list' }]
+      ],
+      docs: [
+        ['Список документов', 'attachment', { name: 'attachments_list' }]
       ]
     }
   }
