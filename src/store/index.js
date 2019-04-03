@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import {API_URL} from '@/util/api'
+import {API_URL, CDN_URL} from '@/util/api'
 Vue.use(Vuex)
 
 const API_ENDPOINT = API_URL
@@ -132,6 +132,21 @@ export default new Vuex.Store({
     },
     GET_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/work/' + payload.toString() + '/', {}).then()
+    },
+    GET_ATTACHMENT: async (context, payload) => {
+      return apiCall(context.getters.token, 'get', '/attachment/' + payload.toString() + '/', {}).then()
+    },
+    GET_ATTACHMENTS_BY_LIST: async (context, payload) => {
+      let arr = []
+      for (let x of payload) {
+        apiCall(context.getters.token, 'get', '/attachment/' + x.toString() + '/', {}).then((result) => {
+          if (!result.data.is_link) {
+            result.data.link = CDN_URL + result.data.link
+          }
+          arr.push(result.data)
+        })
+      }
+      return arr
     }
   }
 })
