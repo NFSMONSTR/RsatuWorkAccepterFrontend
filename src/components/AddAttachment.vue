@@ -71,7 +71,7 @@ export default {
           file: this.file_data
         }
       }
-      console.log(this.$store.dispatch('ADD_ATTACHMENT', payload).then())
+      this.$store.dispatch('ADD_ATTACHMENT', payload).then()
     },
     onFilePicked (e) {
       const files = e.target.files
