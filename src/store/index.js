@@ -139,6 +139,9 @@ export default new Vuex.Store({
     ADD_ATTACHMENT: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/attachment/', payload).then()
     },
+    CONNECT_ATTACHMENT_TO_WORK: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/attachment/' + payload.attachment_id.toString() + '/', { work_id: payload.work_id }).then()
+    },
     GET_ATTACHMENTS: async (context) => {
       return apiCall(context.getters.token, 'get', '/attachment/', {}).then((result) => {
         for (let i = 0; i < result.data.attachments.length; i++) {
@@ -146,7 +149,6 @@ export default new Vuex.Store({
             result.data.attachments[i].link = CDN_URL + result.data.attachments[i].link
           }
         }
-        console.log(result.data)
         return result
       }).then()
     },
@@ -164,6 +166,9 @@ export default new Vuex.Store({
         })
       }
       return arr
+    },
+    DELETE_ATTACHMENT: async (context, payload) => {
+      return apiCall(context.getters.token, 'delete', '/attachment/' + payload.toString() + '/', {}).then()
     }
   }
 })
