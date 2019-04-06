@@ -2,7 +2,7 @@
   <v-card flat>
     <v-card-text>
       <v-layout align-center mb-3>
-        <v-avatar class="mr-3" size="48" tile="false"><img src="https://vuetifyjs.com/apple-touch-icon-180x180.png"></v-avatar>
+        <v-avatar class="mr-3" size="48" tile="false"><img :src="$store.getters.userAvatarUrl(user.id)" alt="avatar"></v-avatar>
         <v-container fluid>
           <v-layout row>
             <strong class="title">{{ user.first_name }} {{ user.second_name }}</strong>

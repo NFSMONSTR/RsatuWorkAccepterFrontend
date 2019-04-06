@@ -11,7 +11,7 @@
 
         <v-list-tile avatar @click.stop="$router.push({ name: 'profile', params: { id: $store.getters.userId } })">
           <v-list-tile-avatar>
-            <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
+            <img :src="$store.getters.avatarUrl" alt="avatar">
           </v-list-tile-avatar>
 
           <v-list-tile-content>

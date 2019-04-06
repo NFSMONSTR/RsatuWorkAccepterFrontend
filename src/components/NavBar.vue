@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 
   <v-toolbar dark color="primary" clipped-left fixed app>
     <v-toolbar-side-icon @click.stop="$store.state.globalNavigationDrawer = !$store.state.globalNavigationDrawer" v-if="$store.getters.isLoggedIn"></v-toolbar-side-icon>
@@ -12,8 +12,8 @@
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
           <v-btn flat fab v-on="on">
-            <v-avatar :tile="true" :size="40">
-              <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
+            <v-avatar :size="40">
+              <img :src="$store.getters.avatarUrl" alt="avatar">
             </v-avatar>
           </v-btn>
         </template>

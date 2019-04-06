@@ -64,21 +64,13 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    token: (state) => {
-      return state.token
-    },
-    tokenLifetime: (state) => {
-      return state.tokenInfo.expires
-    },
-    isLoggedIn: (state) => {
-      return state.isLoggedIn
-    },
-    userId: (state) => {
-      return state.tokenInfo.user_id
-    },
-    user: (state) => {
-      return state.user
-    }
+    token: state => state.token,
+    tokenLifetime: state => state.tokenInfo.expires,
+    isLoggedIn: state => state.isLoggedIn,
+    userId: state => state.tokenInfo.user_id,
+    user: state => state.user,
+    avatarUrl: (state, getters) => getters.userAvatarUrl(getters.userId.toString()),
+    userAvatarUrl: state => userId => CDN_URL + '/avatars/' + userId.toString() + '.jpg'
   },
   actions: {
     LOGIN: async (context, payload) => {
