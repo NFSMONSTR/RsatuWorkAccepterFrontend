@@ -20,6 +20,10 @@ function updToken (self) {
     if (!self.$store.getters.isLoggedIn) {
       self.$router.push({ name: 'login' })
     }
+  } else {
+    if ((!self.$store.getters.isLoggedIn) && (!['login', 'register'].includes(self.$router.currentRoute.name))) {
+      self.$router.push({name: 'login'})
+    }
   }
 }
 

@@ -161,6 +161,12 @@ export default new Vuex.Store({
     },
     DELETE_ATTACHMENT: async (context, payload) => {
       return apiCall(context.getters.token, 'delete', '/attachment/' + payload.toString() + '/', {}).then()
+    },
+    ADD_AVATAR: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/avatars/', payload).then()
+    },
+    DELETE_AVATAR: async (context) => {
+      return apiCall(context.getters.token, 'delete', '/avatars/', {}).then()
     }
   }
 })
