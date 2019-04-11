@@ -95,10 +95,14 @@ export default new Vuex.Store({
       if (context.getters.isLoggedIn) {
         try {
           let result = await apiCall(context.getters.token, 'get', /auth/, {})
-          context.commit('SET_TOKEN', result.data.token)
-          await context.dispatch('UPDATE_USER_INFO')
+          if (result === undefined) {
+            context.commit('LOGOUT')
+          } else {
+            context.commit('SET_TOKEN', result.data.token)
+            await context.dispatch('UPDATE_USER_INFO')
+          }
         } catch (error) {
-          await context.dispatch('LOGOUT')
+          context.commit('LOGOUT')
         }
       }
     },

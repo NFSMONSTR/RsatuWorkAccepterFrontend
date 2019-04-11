@@ -16,10 +16,11 @@ import NavMenu from '@/components/NavMenu'
 
 function updToken (self) {
   if ((self.$store.getters.isLoggedIn) && ((self.$store.getters.tokenLifetime - Math.floor(Date.now() / 1000) < 100) || (self.$store.getters.tokenLifetime === undefined))) {
-    self.$store.dispatch('UPDATE_TOKEN').then()
-    if (!self.$store.getters.isLoggedIn) {
-      self.$router.push({ name: 'login' })
-    }
+    self.$store.dispatch('UPDATE_TOKEN').then(() => {
+      if (!self.$store.getters.isLoggedIn) {
+        self.$router.push({ name: 'login' })
+      }
+    })
   } else {
     if ((!self.$store.getters.isLoggedIn) && (!['login', 'register'].includes(self.$router.currentRoute.name))) {
       self.$router.push({name: 'login'})
@@ -30,7 +31,7 @@ function updToken (self) {
 export default {
   name: 'App',
   components: {NavMenu, NavBar},
-  mounted: function () {
+  mounted () {
     let self = this
     updToken(self)
     setInterval(function () {
