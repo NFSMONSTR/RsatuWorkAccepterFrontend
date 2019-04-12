@@ -7,8 +7,8 @@
         :to="{ name: 'work', params: { id: item.id }}"
       >
         <v-list-tile-content>
-          <v-list-tile-title>{{ item.subject }}</v-list-tile-title>
-          <v-list-tile-sub-title>{{ item.name }}</v-list-tile-sub-title>
+          <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+          <v-list-tile-sub-title>{{ item.subject }}</v-list-tile-sub-title>
           <v-list-tile-sub-title>{{ item.short_description }}</v-list-tile-sub-title>
         </v-list-tile-content>
       </v-list-tile>

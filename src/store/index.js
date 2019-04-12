@@ -123,6 +123,9 @@ export default new Vuex.Store({
         console.error(result)
       }
     },
+    ADD_WORK: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/work/', payload).then()
+    },
     GET_WORKS: async (context) => {
       return apiCall(context.getters.token, 'get', '/work/', {}).then()
     },

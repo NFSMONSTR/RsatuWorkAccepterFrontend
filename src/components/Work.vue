@@ -62,9 +62,9 @@
       </v-layout>
 
       <b>Описание работы:</b>
-      <p>
-        {{ work.description }}
-      </p>
+
+      <p v-if="work.markup===0"><vue-markdown :source="work.description"></vue-markdown></p>
+      <p v-else><vue-mathjax :formula="work.description"></vue-mathjax>></p>
 
       <b v-if="work.attachments.length>0">Прикрепленные файлы и ссылки:</b>
       <v-list v-if="work.attachments.length>0">
@@ -81,9 +81,15 @@
 <script>
 
 import {CDN_URL} from '@/util/api'
+import VueMarkdown from 'vue-markdown'
+import VueMathjax from '@/components/VueMathjax'
 
 export default {
   name: 'Work',
+  components: {
+    VueMarkdown,
+    VueMathjax
+  },
   props: ['id'],
   methods: {
     delete_work: function () {
@@ -101,6 +107,7 @@ export default {
         description: 'No connection',
         subject: 'No connection',
         author: 0,
+        markup: 0,
         attachments: [],
         done_works: []
       },
