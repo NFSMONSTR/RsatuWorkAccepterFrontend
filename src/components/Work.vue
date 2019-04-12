@@ -64,7 +64,7 @@
       <b>Описание работы:</b>
 
       <p v-if="work.markup===0"><vue-markdown :source="work.description"></vue-markdown></p>
-      <p v-else><vue-mathjax :formula="work.description"></vue-mathjax>></p>
+      <p v-else><vue-mathjax :formula="work.description"></vue-mathjax></p>
 
       <b v-if="work.attachments.length>0">Прикрепленные файлы и ссылки:</b>
       <v-list v-if="work.attachments.length>0">
