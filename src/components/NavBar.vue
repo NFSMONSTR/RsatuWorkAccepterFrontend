@@ -30,7 +30,7 @@
     <!-- Logged out toolbar -->
     <v-toolbar-items v-else>
       <v-btn flat to="login" exact>Войти</v-btn>
-      <v-btn flat to="register" exact>Зарегестрироваться</v-btn>
+      <!--<v-btn flat to="register" exact>Зарегестрироваться</v-btn>-->
     </v-toolbar-items>
 
   </v-toolbar>

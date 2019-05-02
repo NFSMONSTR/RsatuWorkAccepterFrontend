@@ -43,7 +43,11 @@ export default new Vuex.Store({
       id: 0,
       username: 'No connection',
       first_name: 'No connection',
-      second_name: 'No connection'
+      second_name: 'No connection',
+      third_name: 'No connection',
+      group: null,
+      year: 0,
+      permission_level: 0
     }
   },
   mutations: {
@@ -118,10 +122,21 @@ export default new Vuex.Store({
     UPDATE_USER_INFO: async (context) => {
       let result = await context.dispatch('GET_USER_INFO', context.getters.userId)
       if (result.status === 200) {
+        if (result.data.group != null) {
+          let res = await context.dispatch('GET_GROUP', result.data.group)
+          if (res.status === 200) {
+            result.data.group = res.data
+          } else {
+            console.error(result)
+          }
+        }
         context.commit('UPDATE_USER_INFO', result.data)
       } else {
         console.error(result)
       }
+    },
+    GET_GROUP: async (context, payload) => {
+      return apiCall(context.getters.token, 'get', '/group/' + payload.toString() + '/', {}).then()
     },
     ADD_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/work/', payload).then()

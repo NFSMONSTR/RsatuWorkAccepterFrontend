@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
-import Register from '@/components/Register'
+// import Register from '@/components/Register'
 import store from '../store'
 import Profile from '@/components/Profile'
 import UsersList from '@/components/UsersList'
@@ -31,14 +31,14 @@ const ifAuthenticated = (to, from, next) => {
 }
 
 const ifTutor = (to, from, next) => {
-  if (store.getters.isLoggedIn) {
+  if (store.getters.isLoggedIn && store.getters.user.permission_level >= 5) {
     next()
     return
   }
   next('/login')
 }
 const ifAdmin = (to, from, next) => {
-  if (store.getters.isLoggedIn) {
+  if (store.getters.isLoggedIn && store.getters.user.permission_level >= 10) {
     next()
     return
   }
@@ -59,12 +59,14 @@ let router = new Router({
       component: Login,
       beforeEnter: ifNotAuthenticated
     },
+    /*
     {
       path: '/register',
       name: 'register',
       component: Register,
       beforeEnter: ifNotAuthenticated
     },
+    */
     {
       path: '/profile/:id',
       name: 'profile',
