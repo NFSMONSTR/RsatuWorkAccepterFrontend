@@ -11,6 +11,7 @@ import AddWork from '@/components/AddWork'
 import Work from '@/components/Work'
 import AttachmentsList from '@/components/AttachmentsList'
 import AddAttachment from '@/components/AddAttachment'
+import AddUser from '@/components/AddUser'
 
 Vue.use(Router)
 
@@ -75,10 +76,16 @@ let router = new Router({
       props: true
     },
     {
+      path: '/user_add/',
+      name: 'add_user',
+      component: AddUser,
+      beforeEnter: ifAdmin
+    },
+    {
       path: '/users/',
       name: 'users_list',
       component: UsersList,
-      beforeEnter: ifAuthenticated
+      beforeEnter: ifAdmin
     },
     {
       path: '/work/',

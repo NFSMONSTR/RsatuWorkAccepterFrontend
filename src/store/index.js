@@ -39,7 +39,7 @@ export default new Vuex.Store({
       salt: 0,
       expires: 0
     },
-    user: {
+    user: JSON.parse(localStorage.getItem('user')) || {
       id: 0,
       username: 'No connection',
       first_name: 'No connection',
@@ -59,12 +59,14 @@ export default new Vuex.Store({
     },
     UPDATE_USER_INFO: (state, payload) => {
       state.user = payload
+      localStorage.setItem('user', JSON.stringify(payload))
     },
     LOGOUT: (state) => {
       state.token = ''
       state.tokenInfo = {}
       state.isLoggedIn = false
       localStorage.removeItem('token')
+      localStorage.removeItem('user')
     }
   },
   getters: {
@@ -113,6 +115,9 @@ export default new Vuex.Store({
     LOGOUT: async (context) => {
       context.commit('LOGOUT')
     },
+    ADD_USER: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/user/', payload)
+    },
     GET_USER_INFO: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/user/' + payload.toString() + '/', {}).then()
     },
@@ -137,6 +142,9 @@ export default new Vuex.Store({
     },
     GET_GROUP: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/group/' + payload.toString() + '/', {}).then()
+    },
+    GET_GROUPS: async (context) => {
+      return apiCall(context.getters.token, 'get', '/group/', {}).then()
     },
     ADD_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/work/', payload).then()

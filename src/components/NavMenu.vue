@@ -95,15 +95,62 @@
       </v-list-group>
 
       <!-- if admin -->
-      <v-list-tile :to="{name: 'admin'}">
-        <v-list-tile-action>
-          <v-icon>gavel</v-icon>
-        </v-list-tile-action>
+      <v-list-group
+        prepend-icon="account_circle"
+        value="true"
+      >
+        <template v-slot:activator>
+          <v-list-tile>
+            <v-list-tile-title>Администратору</v-list-tile-title>
+          </v-list-tile>
+        </template>
+        <v-list-group
+          no-action
+          sub-group
+          value="true"
+        >
+          <template v-slot:activator>
+            <v-list-tile>
+              <v-list-tile-title>Пользователи</v-list-tile-title>
+            </v-list-tile>
+          </template>
 
-        <v-list-tile-content>
-          <v-list-tile-title>Админ панель</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
+          <v-list-tile
+            v-for="(a, i) in admin"
+            :key="i"
+            :to="a[2]"
+          >
+            <v-list-tile-title v-text="a[0]"></v-list-tile-title>
+            <v-list-tile-action>
+              <v-icon v-text="a[1]"></v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list-group>
+
+        <v-list-group
+          no-action
+          sub-group
+          value="true"
+        >
+          <template v-slot:activator>
+            <v-list-tile>
+              <v-list-tile-title>Группы</v-list-tile-title>
+            </v-list-tile>
+          </template>
+
+          <v-list-tile
+            v-for="(a, i) in admin_g"
+            :key="i"
+            :to="a[2]"
+          >
+            <v-list-tile-title v-text="a[0]"></v-list-tile-title>
+            <v-list-tile-action>
+              <v-icon v-text="a[1]"></v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list-group>
+
+      </v-list-group>
 
     </v-list>
 
@@ -122,6 +169,13 @@ export default {
       docs: [
         ['Добавить документ', 'attach_file', { name: 'add_attachment' }],
         ['Список документов', 'attachment', { name: 'attachments_list' }]
+      ],
+      admin: [
+        ['Добавить пользователей', 'person_add', { name: 'add_user' }],
+        ['Список пользователей', 'people', { name: 'users_list' }]
+      ],
+      admin_g: [
+        ['Группы пользователей', 'group', { name: 'group' }]
       ]
     }
   }
