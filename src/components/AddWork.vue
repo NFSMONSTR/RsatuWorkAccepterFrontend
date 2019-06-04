@@ -76,7 +76,8 @@ export default {
         subject: '',
         short_description: '',
         markup: 0,
-        description: ''
+        description: '',
+        semestr: 1
       }
     }
   },

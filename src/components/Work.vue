@@ -2,8 +2,8 @@
   <v-card flat>
     <v-card-text>
       <v-layout align-center mb-3>
-        <v-avatar color="grey" class="mr-3" size="48"></v-avatar>
-        <v-container fluid>
+        <!--<v-avatar color="grey" class="mr-3" size="48"></v-avatar>-->
+        <v-container fluid style="padding-left:0px;">
           <v-layout row>
               <strong class="title">{{ work.name }} - {{ work.subject }}</strong>
           </v-layout>
