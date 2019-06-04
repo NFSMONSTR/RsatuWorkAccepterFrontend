@@ -118,6 +118,19 @@ export default new Vuex.Store({
     ADD_USER: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/user/', payload)
     },
+    ADD_USERS: async (context, payload) => {
+      let badUsers = []
+      for (let i = 0; i < payload.length; i++) {
+        let result = await context.dispatch('ADD_USER', payload[i])
+        if (result.status !== 201) {
+          badUsers.push(payload[i].username)
+        }
+      }
+      return {
+        status: badUsers.length,
+        data: badUsers
+      }
+    },
     GET_USER_INFO: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/user/' + payload.toString() + '/', {}).then()
     },

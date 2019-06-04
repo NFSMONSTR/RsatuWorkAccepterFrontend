@@ -82,7 +82,7 @@
         <form>
           <v-textarea
             box
-            label="CSV: логин,имя,фамилия,отчество,группа,год начала обучения,уровень прав"
+            label="CSV: логин,имя,фамилия,отчество,пароль,группа,год начала обучения,уровень прав"
             auto-grow
             v-model="multiple_csv"
           ></v-textarea>
@@ -129,8 +129,15 @@ export default {
         payload.group = null
       }
       this.$store.dispatch('ADD_USER', payload).then((result) => {
-        this.alert = true
-        this.alert_text = 'Пользователь успешно добавлен'
+        if (result.status === 201) {
+          this.alert = true
+          this.alert_type = 'success'
+          this.alert_text = 'Пользователь успешно добавлен'
+        } else {
+          this.alert = true
+          this.alert_type = 'error'
+          this.alert_text = 'Ошибка при добавлении пользователя, ответ от сервера: ' + result.data.title + ': ' + result.data.description
+        }
       })
     },
     add_multiple: function () {
@@ -140,24 +147,47 @@ export default {
         this.alert1_type = 'error'
         this.alert1 = true
       } else {
-        for (let line in csv.data) {
-          let user = {}
-          user.username = line[0]
-          user.first_name = line[1]
-          user.second_name = line[2]
-          user.third_name = line[3]
-          user.password = line[4]
-          user.group = line[5]// tood
-          user.year = line[6]
-          user.permission_level = line[7]
-          if (user.group === '') {
+        let users = []
+        csv.data.forEach(function (line) {
+          console.log(line)
+          let user = {
+            username: line[0],
+            first_name: line[1],
+            second_name: line[2],
+            third_name: line[3],
+            password: line[4],
+            group: line[5],
+            year: +line[6],
+            permission_level: +line[7]
+          }
+          if (user.group === '-') {
             user.group = null
           }
-          this.$store.dispatch('ADD_USER', user).then()
-        }
-        this.alert1_text = 'Пользователи успешно добавлены'
-        this.alert1_type = 'success'
-        this.alert1 = true
+          users.push(user)
+        })
+        this.$store.dispatch('ADD_USERS', users).then((result) => {
+          if (result.status === 0) {
+            this.alert1_text = 'Все пользователи успешно добавлены'
+            this.alert1_type = 'success'
+            this.alert1 = true
+          } else if (result.status === users.length) {
+            this.alert1_text = 'Ни один пользователь не был добавлен'
+            this.alert1_type = 'error'
+            this.alert1 = true
+          } else {
+            let s = ''
+            result.data.forEach(function (e, i, arr) {
+              if (i !== arr.length - 1) {
+                s += e + ', '
+              } else {
+                s += e
+              }
+            })
+            this.alert1_text = 'Все пользователи, кроме: ' + s + ' были успешно добавлены'
+            this.alert1_type = 'warning'
+            this.alert1 = true
+          }
+        })
       }
     }
   },
