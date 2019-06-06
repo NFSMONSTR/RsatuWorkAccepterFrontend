@@ -60,9 +60,10 @@ export default {
     },
     uploadAvatar () {
       if ((this.file_name !== '') && (this.file_data !== '')) {
-        this.$store.dispatch('ADD_AVATAR', { 'file': this.file_data }).then()
-        this.$emit('update')
-        this.$emit('end')
+        this.$store.dispatch('ADD_AVATAR', { 'file': this.file_data }).then((result) => {
+          this.$emit('update')
+          this.$emit('end')
+        })
       }
     },
     removeAvatar () {

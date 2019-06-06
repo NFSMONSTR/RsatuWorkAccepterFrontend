@@ -137,6 +137,9 @@ export default new Vuex.Store({
     GET_USERS: async (context) => {
       return apiCall(context.getters.token, 'get', '/user/', {}).then()
     },
+    DELETE_USER: async (context, payload) => {
+      return apiCall(context.getters.token, 'delete', '/user/' + payload.toString() + '/', {}).then()
+    },
     UPDATE_USER_INFO: async (context) => {
       let result = await context.dispatch('GET_USER_INFO', context.getters.userId)
       if (result.status === 200) {
