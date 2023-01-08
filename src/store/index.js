@@ -77,7 +77,7 @@ export default new Vuex.Store({
     userId: state => state.tokenInfo.user_id,
     user: state => state.user,
     avatarUrl: (state, getters) => getters.userAvatarUrl(getters.userId.toString()),
-    userAvatarUrl: state => userId => CDN_URL + '/avatars/' + userId.toString() + '.jpg'
+    userAvatarUrl: state => userId => CDN_URL + '/avatar/' + userId.toString() + '.png'
   },
   actions: {
     LOGIN: async (context, payload) => {
@@ -163,6 +163,9 @@ export default new Vuex.Store({
     GET_GROUPS: async (context) => {
       return apiCall(context.getters.token, 'get', '/group/', {}).then()
     },
+    DELETE_GROUP: async (context, payload) => {
+      return apiCall(context.getters.token, 'delete', '/group/'+ payload.toString() + '/', {}).then()
+    },
     ADD_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/work/', payload).then()
     },
@@ -175,10 +178,22 @@ export default new Vuex.Store({
     DELETE_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'delete', '/work/' + payload.toString() + '/', {}).then()
     },
+    ADD_DONE_WORK: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/donework/', payload).then()
+    },
+    GET_DONE_WORKS: async (context, payload) => {
+      return apiCall(context.getters.token, 'get', '/donework/', {}, payload).then()
+    },
+    GET_DONE_WORK: async (context, payload) => {
+      return apiCall(context.getters.token, 'get', '/donework/'+payload.toString()+'/', {}).then()
+    },
     ADD_ATTACHMENT: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/attachment/', payload).then()
     },
     CONNECT_ATTACHMENT_TO_WORK: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/attachment/connection/', payload).then()
+    },
+    CONNECT_ATTACHMENT: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/attachment/connection/', payload).then()
     },
     GET_ATTACHMENTS: async (context) => {
@@ -211,10 +226,10 @@ export default new Vuex.Store({
     },
     ADD_AVATAR: async (context, payload) => {
       console.log(payload)
-      return apiCall(context.getters.token, 'post', '/avatars/', payload).then()
+      return apiCall(context.getters.token, 'post', '/avatar/', payload).then()
     },
     DELETE_AVATAR: async (context) => {
-      return apiCall(context.getters.token, 'delete', '/avatars/', {}).then()
+      return apiCall(context.getters.token, 'delete', '/avatar/', {}).then()
     }
   }
 })

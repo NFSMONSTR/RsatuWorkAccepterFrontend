@@ -92,6 +92,13 @@ export default {
           perm: 0
         },
         {
+          type: 0,
+          header: 'Выполненные работы',
+          to: 'done_works',
+          icon: 'assignment_turned_in',
+          perm: 0,
+        },
+        {
           type: 1,
           header: 'Документы',
           perm: 0,
@@ -108,7 +115,7 @@ export default {
           icon: 'assignment',
           data: [
             ['Добавть работу', 'note_add', { name: 'add_work' }, 5],
-            ['Список моих работ', 'assignment', { name: 'works_list' }, 5]
+            ['Список моих работ', 'assignment', { name: 'works_list' }, 5],
           ]
         },
         {

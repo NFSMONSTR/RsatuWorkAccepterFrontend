@@ -12,6 +12,10 @@ import Work from '@/components/Work'
 import AttachmentsList from '@/components/AttachmentsList'
 import AddAttachment from '@/components/AddAttachment'
 import AddUser from '@/components/AddUser'
+import GroupsList from "../components/GroupsList.vue";
+import AddDoneWork from "../components/AddDoneWork.vue";
+import DoneWorksList from "../components/DoneWorksList.vue";
+import DoneWork from "../components/DoneWork.vue";
 
 Vue.use(Router)
 
@@ -123,6 +127,32 @@ let router = new Router({
       name: 'add_work',
       component: AddWork,
       beforeEnter: ifTutor
+    },
+    {
+      path: '/group',
+      name: 'group',
+      component: GroupsList,
+      beforeEnter: ifAdmin
+    },
+    {
+      path: '/do_work',
+      name: 'do_work',
+      component: AddDoneWork,
+      beforeEnter: ifAuthenticated,
+      props: true,
+    },
+    {
+      path: '/done_works',
+      name: 'done_works',
+      component: DoneWorksList,
+      beforeEnter: ifAuthenticated,
+    },
+    {
+      path: '/done_work',
+      name: 'done_work',
+      component: DoneWork,
+      beforeEnter: ifAuthenticated,
+      props: true,
     }
   ]
 })
