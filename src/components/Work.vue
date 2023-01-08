@@ -1,28 +1,36 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <v-layout align-center mb-3>
+      <v-layout 
+        align-center 
+        mb-3>
         <!--<v-avatar color="grey" class="mr-3" size="48"></v-avatar>-->
-        <v-container fluid style="padding-left:0px;">
+        <v-container 
+          fluid 
+          style="padding-left:0px;">
           <v-layout row>
-              <strong class="title">{{ work.name }} - {{ work.subject }}</strong>
+            <strong class="title">{{ work.name }} - {{ work.subject }}</strong>
           </v-layout>
           <v-layout row>
-              {{ work.author.first_name + ' ' + work.author.second_name }}
+            {{ work.author.first_name + ' ' + work.author.second_name }}
           </v-layout>
         </v-container>
 
-        <v-btn icon v-if="work.author.id === $store.getters.userId">
+        <v-btn 
+          v-if="work.author.id === $store.getters.userId" 
+          icon>
           <v-icon color="green lighten-1">edit</v-icon>
         </v-btn>
 
         <v-dialog
+          v-if="work.author.id === $store.getters.userId"
           v-model="delete_dialog"
           width="500"
-          v-if="work.author.id === $store.getters.userId"
         >
           <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on">
+            <v-btn 
+              icon 
+              v-on="on">
               <v-icon color="red lighten-1">delete_forever</v-icon>
             </v-btn>
           </template>
@@ -38,10 +46,10 @@
               Данное действие нельзя отменить. Удалить работу?
             </v-card-text>
 
-            <v-divider></v-divider>
+            <v-divider/>
 
             <v-card-actions>
-              <v-spacer></v-spacer>
+              <v-spacer/>
               <v-btn
                 color="primary"
                 flat
@@ -63,12 +71,14 @@
 
       <b>Описание работы:</b>
 
-      <p v-if="work.markup===0"><vue-markdown :source="work.description"></vue-markdown></p>
-      <p v-else><vue-mathjax :formula="work.description"></vue-mathjax></p>
+      <p v-if="work.markup===0"><vue-markdown :source="work.description"/></p>
+      <p v-else><vue-mathjax :formula="work.description"/></p>
 
       <b v-if="work.attachments.length>0">Прикрепленные файлы и ссылки:</b>
       <v-list v-if="work.attachments.length>0">
-        <v-list-tile v-for="(attachment, i) in work.attachments" :key="i">
+        <v-list-tile 
+          v-for="(attachment, i) in work.attachments" 
+          :key="i">
           <v-list-tile-content>
             <v-btn :href="attachment.link">{{ attachment.name }}</v-btn>
           </v-list-tile-content>
@@ -91,13 +101,6 @@ export default {
     VueMathjax
   },
   props: ['id'],
-  methods: {
-    delete_work: function () {
-      this.$store.dispatch('DELETE_WORK', this.work.id).then((result) => {
-        this.$router.push({ name: 'works_list' })
-      })
-    }
-  },
   data: function () {
     return {
       work: {
@@ -125,7 +128,14 @@ export default {
         this.work.attachments = result
       })
     })
-  }
+  },
+  methods: {
+    delete_work: function () {
+      this.$store.dispatch('DELETE_WORK', this.work.id).then((result) => {
+        this.$router.push({ name: 'works_list' })
+      })
+    }
+  },
 }
 </script>
 

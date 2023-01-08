@@ -1,17 +1,23 @@
 <template>
   <v-navigation-drawer
-    fixed
     v-model="$store.state.globalNavigationDrawer"
+    fixed
     clipped
     app
   >
 
-    <v-toolbar flat class="transparent">
+    <v-toolbar 
+      flat 
+      class="transparent">
       <v-list class="pa-0">
 
-        <v-list-tile avatar @click.stop="$router.push({ name: 'profile', params: { id: $store.getters.userId } })">
+        <v-list-tile 
+          avatar 
+          @click.stop="$router.push({ name: 'profile', params: { id: $store.getters.userId } })">
           <v-list-tile-avatar>
-            <img :src="$store.getters.avatarUrl" alt="avatar">
+            <img 
+              :src="$store.getters.avatarUrl" 
+              alt="avatar">
           </v-list-tile-avatar>
 
           <v-list-tile-content>
@@ -22,42 +28,49 @@
       </v-list>
     </v-toolbar>
 
-    <v-list class="pt-0" dense expand>
-      <v-divider></v-divider>
+    <v-list 
+      class="pt-0" 
+      dense 
+      expand>
+      <v-divider/>
 
-      <div v-for="(m, i) in menu_nav" v-bind:key="i">
-         <v-list-tile v-if="(m.type === 0) && ($store.getters.user.permission_level>=m.perm)" :to="m.to">
+      <div 
+        v-for="(m, i) in menu_nav" 
+        :key="i">
+        <v-list-tile 
+          v-if="(m.type === 0) && ($store.getters.user.permission_level>=m.perm)" 
+          :to="m.to">
           <v-list-tile-action>
             <v-icon>{{ m.icon }}</v-icon>
           </v-list-tile-action>
 
           <v-list-tile-content>
-             <v-list-tile-title>{{m.header}}</v-list-tile-title>
+            <v-list-tile-title>{{ m.header }}</v-list-tile-title>
           </v-list-tile-content>
-         </v-list-tile>
+        </v-list-tile>
 
         <v-list-group
           v-if="(m.type === 1) && ($store.getters.user.permission_level>=m.perm)"
-          no-action=""
           :prepend-icon="m.icon"
+          no-action=""
           value="true"
         >
           <template v-slot:activator>
             <v-list-tile>
-              <v-list-tile-title>{{m.header}}</v-list-tile-title>
+              <v-list-tile-title>{{ m.header }}</v-list-tile-title>
             </v-list-tile>
           </template>
-            <v-list-tile
-              v-for="(data, i) in m.data"
-              :key="i"
-              :to="data[2]"
-              v-if="$store.getters.user.permission_level>=data[3]"
-            >
-              <v-list-tile-title v-text="data[0]"></v-list-tile-title>
-              <v-list-tile-action>
-                <v-icon v-text="data[1]"></v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
+          <v-list-tile
+            v-for="(data, i) in m.data"
+            v-if="$store.getters.user.permission_level>=data[3]"
+            :key="i"
+            :to="data[2]"
+          >
+            <v-list-tile-title v-text="data[0]"/>
+            <v-list-tile-action>
+              <v-icon v-text="data[1]"/>
+            </v-list-tile-action>
+          </v-list-tile>
         </v-list-group>
       </div>
     </v-list>

@@ -1,35 +1,45 @@
 <template>
-    <v-dialog
-      v-model="open"
-      persistent
-      max-width="600"
-    >
+  <v-dialog
+    v-model="open"
+    persistent
+    max-width="600"
+  >
     <v-card>
       <v-card-title>
         <span class="headline">Изменить аватар</span>
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
-            <v-flex xs12>
-              <input
-                type="file"
-                @change="onFilePicked"
-              >
-            </v-flex>
-            <v-flex xs12>
-              <v-btn color="success" block @click="uploadAvatar()" :disabled="file_data===''">Загрузить аватар</v-btn>
-            </v-flex>
-            <v-flex xs12>
-              <v-btn color="error" block @click="removeAvatar()">Удалить аватар</v-btn>
-            </v-flex>
+          <v-flex xs12>
+            <input
+              type="file"
+              @change="onFilePicked"
+            >
+          </v-flex>
+          <v-flex xs12>
+            <v-btn 
+              :disabled="file_data===''" 
+              color="success" 
+              block 
+              @click="uploadAvatar()">Загрузить аватар</v-btn>
+          </v-flex>
+          <v-flex xs12>
+            <v-btn 
+              color="error" 
+              block 
+              @click="removeAvatar()">Удалить аватар</v-btn>
+          </v-flex>
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click="$emit('end')">Закрыть</v-btn>
+        <v-spacer/>
+        <v-btn 
+          color="blue darken-1" 
+          flat 
+          @click="$emit('end')">Закрыть</v-btn>
       </v-card-actions>
     </v-card>
-    </v-dialog>
+  </v-dialog>
 </template>
 
 <script>

@@ -13,13 +13,13 @@
       </v-card-title>
 
       <v-card-text>
-        Данное действие нельзя отменить. <slot></slot>
+        Данное действие нельзя отменить. <slot/>
       </v-card-text>
 
-      <v-divider></v-divider>
+      <v-divider/>
 
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer/>
         <v-btn
           color="primary"
           flat

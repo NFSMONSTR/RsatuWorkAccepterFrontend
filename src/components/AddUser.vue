@@ -1,91 +1,95 @@
 <template>
   <div>
-  <v-card flat>
-    <v-card-title primary-title class="title">Добавить пользователя</v-card-title>
-    <v-card-text>
-      <v-alert
-        v-model="alert"
-        dismissible
-        :type="alert_type"
-      >
-        {{alert_text}}
-      </v-alert>
-      <form>
-        <v-text-field
-          v-model="user.username"
-          label="Логин"
-          required
-        ></v-text-field>
+    <v-card flat>
+      <v-card-title 
+        primary-title 
+        class="title">Добавить пользователя</v-card-title>
+      <v-card-text>
+        <v-alert
+          v-model="alert"
+          :type="alert_type"
+          dismissible
+        >
+          {{ alert_text }}
+        </v-alert>
+        <form>
+          <v-text-field
+            v-model="user.username"
+            label="Логин"
+            required
+          />
 
-        <v-text-field
-          v-model="user.first_name"
-          label="Имя"
-          required
-        ></v-text-field>
+          <v-text-field
+            v-model="user.first_name"
+            label="Имя"
+            required
+          />
 
-        <v-text-field
-          v-model="user.second_name"
-          label="Фамилия"
-          required
-        ></v-text-field>
+          <v-text-field
+            v-model="user.second_name"
+            label="Фамилия"
+            required
+          />
 
-        <v-text-field
-          v-model="user.third_name"
-          label="Отчество"
-          required
-        ></v-text-field>
+          <v-text-field
+            v-model="user.third_name"
+            label="Отчество"
+            required
+          />
 
-        <v-text-field
-          v-model="user.password"
-          label="Пароль"
-          required
-          :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-          :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
-        ></v-text-field>
+          <v-text-field
+            v-model="user.password"
+            :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+            :type="showPassword ? 'text' : 'password'"
+            label="Пароль"
+            required
+            @click:append="showPassword = !showPassword"
+          />
 
-        <v-select
-          :items="groups"
-          label="Группа"
-          required
-          v-model="user.group"
-        ></v-select>
+          <v-select
+            :items="groups"
+            v-model="user.group"
+            label="Группа"
+            required
+          />
 
-        <v-text-field
-          v-model="user.year"
-          label="Год начала обучения"
-          required
-        ></v-text-field>
+          <v-text-field
+            v-model="user.year"
+            label="Год начала обучения"
+            required
+          />
 
-        <v-select
-          :items="[0,5,10]"
-          label="Уровень прав"
-          required
-          v-model="user.permission_level"
-        ></v-select>
+          <v-select
+            :items="['USER','TEACHER','ADMIN']"
+            v-model="user.role"
+            label="Уровень прав"
+            required
+          />
 
-        <v-btn @click="add_single_user">Добавить</v-btn>
-      </form>
-    </v-card-text>
-  </v-card>
+          <v-btn @click="add_single_user">Добавить</v-btn>
+        </form>
+      </v-card-text>
+    </v-card>
 
-  <v-card flat>
-      <v-card-title primary-title class="title">Добавить пользователей</v-card-title>
+    <v-card flat>
+      <v-card-title 
+        primary-title 
+        class="title">Добавить пользователей</v-card-title>
       <v-card-text>
         <v-alert
           v-model="alert1"
-          dismissible
           :type="alert1_type"
+          dismissible
         >
-          {{alert1_text}}
+          {{ alert1_text }}
         </v-alert>
         <form>
           <v-textarea
+            v-model="multiple_csv"
             box
             label="CSV: логин,имя,фамилия,отчество,пароль,группа,год начала обучения,уровень прав"
             auto-grow
-            v-model="multiple_csv"
-          ></v-textarea>
+          />
           <v-btn @click="add_multiple">Добавить</v-btn>
         </form>
       </v-card-text>
@@ -118,9 +122,14 @@ export default {
         password: '',
         group: null,
         year: (() => { let y = new Date().getYear(); if (y < 1900) y += 1900; return y })(),
-        permission_level: 0
+        role: 'USER'
       }
     }
+  },
+  mounted () {
+    this.$store.dispatch('GET_GROUPS').then((result) => {
+      this.groups.concat(result.data)
+    })
   },
   methods: {
     add_single_user: function () {
@@ -129,7 +138,7 @@ export default {
         payload.group = null
       }
       this.$store.dispatch('ADD_USER', payload).then((result) => {
-        if (result.status === 201) {
+        if (result.status === 201 || result.status === 200) {
           this.alert = true
           this.alert_type = 'success'
           this.alert_text = 'Пользователь успешно добавлен'
@@ -158,7 +167,7 @@ export default {
             password: line[4],
             group: line[5],
             year: +line[6],
-            permission_level: +line[7]
+            role: +line[7]
           }
           if (user.group === '-') {
             user.group = null
@@ -191,11 +200,6 @@ export default {
       }
     }
   },
-  mounted () {
-    this.$store.dispatch('GET_GROUPS').then((result) => {
-      this.groups.concat(result.data)
-    })
-  }
 }
 </script>
 

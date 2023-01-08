@@ -1,7 +1,9 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <v-layout align-center mb-3>
+      <v-layout 
+        align-center 
+        mb-3>
         <v-badge
           color="cyan"
           right
@@ -9,9 +11,16 @@
           overlap
         >
           <template v-slot:badge>
-            <v-icon @click="avatar_select_dialog = true" style="cursor: pointer" color="white">autorenew</v-icon>
+            <v-icon 
+              style="cursor: pointer" 
+              color="white" 
+              @click="avatar_select_dialog = true">autorenew</v-icon>
           </template>
-          <v-avatar size="48" :tile="false"><img :src="$store.getters.userAvatarUrl(user.id)" alt="avatar"></v-avatar>
+          <v-avatar 
+            :tile="false" 
+            size="48"><img 
+              :src="$store.getters.userAvatarUrl(user.id)" 
+              alt="avatar"></v-avatar>
         </v-badge>
         <v-container fluid>
           <v-layout row>
@@ -23,7 +32,10 @@
         </v-container>
       </v-layout>
     </v-card-text>
-    <avatar-dialog :open="avatar_select_dialog" @end="avatar_select_dialog = false" @update="$router.go($router.currentRoute)"></avatar-dialog>
+    <avatar-dialog 
+      :open="avatar_select_dialog" 
+      @end="avatar_select_dialog = false" 
+      @update="$router.go($router.currentRoute)"/>
   </v-card>
 </template>
 

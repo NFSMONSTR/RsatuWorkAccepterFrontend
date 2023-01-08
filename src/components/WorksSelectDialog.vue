@@ -1,8 +1,17 @@
 <template>
-  <v-dialog v-model="open" fullscreen hide-overlay transition="dialog-bottom-transition">
+  <v-dialog 
+    v-model="open" 
+    fullscreen 
+    hide-overlay 
+    transition="dialog-bottom-transition">
     <v-card>
-      <v-toolbar dark color="primary">
-        <v-btn icon dark @click="$emit('end')">
+      <v-toolbar 
+        dark 
+        color="primary">
+        <v-btn 
+          icon 
+          dark 
+          @click="$emit('end')">
           <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title>Выберите работу</v-toolbar-title>
@@ -50,7 +59,7 @@ export default {
     open: function (val) {
       if (val) {
         this.$store.dispatch('GET_WORKS').then((result) => {
-          this.works = result.data.works
+          this.works = result.data
         })
       }
     }

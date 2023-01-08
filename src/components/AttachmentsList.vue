@@ -13,19 +13,29 @@
           <v-list-tile-action>
             <v-layout row>
               <v-btn icon>
-                <v-icon color="grey lighten-0" @click.stop="work_select_dialog = true; current = item.id">attach_file</v-icon>
+                <v-icon 
+                  color="grey lighten-0" 
+                  @click.stop="work_select_dialog = true; current = item.id">attach_file</v-icon>
               </v-btn>
-              <v-spacer></v-spacer>
+              <v-spacer/>
               <v-btn icon>
-                <v-icon color="red lighten-1" @click.stop="delete_dialog = true; current = item.id">delete_forever</v-icon>
+                <v-icon 
+                  color="red lighten-1" 
+                  @click.stop="delete_dialog = true; current = item.id">delete_forever</v-icon>
               </v-btn>
-          </v-layout>
+            </v-layout>
           </v-list-tile-action>
         </v-list-tile>
       </template>
     </v-list>
-    <PopupDialog :open="delete_dialog" @yes="delete_attachment(current)" @end="delete_dialog = false">Удалить документ?</PopupDialog>
-    <works-select-dialog :open="work_select_dialog" @end="work_select_dialog = false" @result="connect_to_work"></works-select-dialog>
+    <PopupDialog 
+      :open="delete_dialog" 
+      @yes="delete_attachment(current)" 
+      @end="delete_dialog = false">Удалить документ?</PopupDialog>
+    <works-select-dialog 
+      :open="work_select_dialog" 
+      @end="work_select_dialog = false" 
+      @result="connect_to_work"/>
   </div>
 </template>
 
@@ -66,11 +76,11 @@ export default {
     },
     load_attachments: function () {
       this.$store.dispatch('GET_ATTACHMENTS').then((result) => {
-        this.attachments = result.data.attachments
+        this.attachments = result.data
       })
     },
     connect_to_work: function (workId) {
-      this.$store.dispatch('CONNECT_ATTACHMENT_TO_WORK', { attachment_id: this.current, work_id: workId }).then()
+      this.$store.dispatch('CONNECT_ATTACHMENT_TO_WORK', { attachmentId: this.current, connectionId: workId, connectionType: 'WORK' }).then()
     }
   }
 }

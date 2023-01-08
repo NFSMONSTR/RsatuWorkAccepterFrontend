@@ -1,10 +1,19 @@
 <template>
   <v-content>
-    <v-container fluid fill-height>
-      <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md4>
+    <v-container 
+      fluid 
+      fill-height>
+      <v-layout 
+        align-center 
+        justify-center>
+        <v-flex 
+          xs12 
+          sm8 
+          md4>
           <v-card class="elevation-12">
-            <v-toolbar dark color="primary">
+            <v-toolbar 
+              dark 
+              color="primary">
               <v-toolbar-title>Вход</v-toolbar-title>
             </v-toolbar>
             <v-form
@@ -26,7 +35,7 @@
                   label="Логин"
                   required
                   prepend-icon="person"
-                ></v-text-field>
+                />
 
                 <v-text-field
                   v-model="password"
@@ -35,16 +44,16 @@
                   :type="showPassword ? 'text' : 'password'"
                   label="Пароль"
                   class="input-group--focused"
-                  @click:append="showPassword = !showPassword"
                   required
                   prepend-icon="lock"
-                ></v-text-field>
+                  @click:append="showPassword = !showPassword"
+                />
               </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn
-                  block
                   :disabled="!valid"
+                  block
                   color="success"
                   @click="validate"
                 >

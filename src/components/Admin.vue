@@ -1,5 +1,5 @@
 <template>
- <v-list>
+  <v-list>
     <v-list-tile
       :to="{ name: 'users_list' }"
     >

@@ -1,18 +1,22 @@
 <template>
   <v-card flat>
-    <v-card-title primary-title class="title">Добавить документ</v-card-title>
+    <v-card-title 
+      primary-title 
+      class="title">Добавить документ</v-card-title>
     <v-card-text>
       <form>
         Тип документа:
-        <v-radio-group v-model="is_link" required>
+        <v-radio-group 
+          v-model="is_link" 
+          required>
           <v-radio
-            label="Ссылка"
             :value="true"
-          ></v-radio>
+            label="Ссылка"
+          />
           <v-radio
-            label="Файл"
             :value="false"
-          ></v-radio>
+            label="Файл"
+          />
         </v-radio-group>
 
         <v-text-field
@@ -20,14 +24,14 @@
           v-model="name"
           label="Название"
           required
-        ></v-text-field>
+        />
 
         <v-text-field
           v-if="is_link"
           v-model="link"
           label="Ссылка"
           required
-        ></v-text-field>
+        />
 
         <input
           v-if="!is_link"
@@ -81,6 +85,7 @@ export default {
         const fr = new FileReader()
         fr.readAsDataURL(files[0])
         fr.addEventListener('load', () => {
+          console.log(fr.result, 'end')
           this.file_data = fr.result
         })
       } else {

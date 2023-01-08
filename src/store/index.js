@@ -2,16 +2,19 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import {API_URL, CDN_URL} from '@/util/api'
+import jwt_decode from 'jwt-decode';
+import permission_convert from "../util/permission_converter";
 Vue.use(Vuex)
 
 const API_ENDPOINT = API_URL
 
-async function apiCall (token, method, url, data) {
+async function apiCall (token, method, url, data, params = {}) {
   try {
     return await axios.request({
       headers: {
-        'Authorization': 'Token ' + token
+        'Authorization': 'Bearer ' + token
       },
+      params: params,
       method: method,
       url: API_ENDPOINT + url,
       data: data
@@ -23,10 +26,8 @@ async function apiCall (token, method, url, data) {
 
 function getTokenInfo (token) {
   if ((token === '') || (token === undefined)) return false
-  let tokenInfo = atob(token.replace(/_/g, '/').replace(/-/g, '+'))
-  tokenInfo = JSON.parse(tokenInfo.slice(0, tokenInfo.indexOf('}') + 1))
-  tokenInfo['expires'] = Math.floor(tokenInfo.expires)
-  return tokenInfo
+  console.log(jwt_decode(token))
+  return jwt_decode(token)
 }
 
 export default new Vuex.Store({
@@ -36,8 +37,7 @@ export default new Vuex.Store({
     token: localStorage.getItem('token') || '',
     tokenInfo: getTokenInfo(this.token) || {
       user_id: 0,
-      salt: 0,
-      expires: 0
+      exp: 0
     },
     user: JSON.parse(localStorage.getItem('user')) || {
       id: 0,
@@ -59,6 +59,7 @@ export default new Vuex.Store({
     },
     UPDATE_USER_INFO: (state, payload) => {
       state.user = payload
+      state.user.permission_level = permission_convert(payload.role);
       localStorage.setItem('user', JSON.stringify(payload))
     },
     LOGOUT: (state) => {
@@ -71,7 +72,7 @@ export default new Vuex.Store({
   },
   getters: {
     token: state => state.token,
-    tokenLifetime: state => state.tokenInfo.expires,
+    tokenLifetime: state => state.tokenInfo.exp,
     isLoggedIn: state => state.isLoggedIn,
     userId: state => state.tokenInfo.user_id,
     user: state => state.user,
@@ -122,7 +123,7 @@ export default new Vuex.Store({
       let badUsers = []
       for (let i = 0; i < payload.length; i++) {
         let result = await context.dispatch('ADD_USER', payload[i])
-        if (result.status !== 201) {
+        if (result.status !== 201 && result.status !== 200) {
           badUsers.push(payload[i].username)
         }
       }
@@ -134,8 +135,8 @@ export default new Vuex.Store({
     GET_USER_INFO: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/user/' + payload.toString() + '/', {}).then()
     },
-    GET_USERS: async (context) => {
-      return apiCall(context.getters.token, 'get', '/user/', {}).then()
+    GET_USERS: async (context, payload) => {
+      return apiCall(context.getters.token, 'get', '/user/', {}, payload).then()
     },
     DELETE_USER: async (context, payload) => {
       return apiCall(context.getters.token, 'delete', '/user/' + payload.toString() + '/', {}).then()
@@ -165,8 +166,8 @@ export default new Vuex.Store({
     ADD_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/work/', payload).then()
     },
-    GET_WORKS: async (context) => {
-      return apiCall(context.getters.token, 'get', '/work/', {}).then()
+    GET_WORKS: async (context, payload) => {
+      return apiCall(context.getters.token, 'get', '/work/', {}, payload).then()
     },
     GET_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/work/' + payload.toString() + '/', {}).then()
@@ -178,13 +179,13 @@ export default new Vuex.Store({
       return apiCall(context.getters.token, 'post', '/attachment/', payload).then()
     },
     CONNECT_ATTACHMENT_TO_WORK: async (context, payload) => {
-      return apiCall(context.getters.token, 'post', '/attachment/' + payload.attachment_id.toString() + '/', { work_id: payload.work_id }).then()
+      return apiCall(context.getters.token, 'post', '/attachment/connection/', payload).then()
     },
     GET_ATTACHMENTS: async (context) => {
       return apiCall(context.getters.token, 'get', '/attachment/', {}).then((result) => {
-        for (let i = 0; i < result.data.attachments.length; i++) {
-          if (!result.data.attachments[i].is_link) {
-            result.data.attachments[i].link = CDN_URL + result.data.attachments[i].link
+        for (let i = 0; i < result.data.length; i++) {
+          if (!result.data[i].is_link) {
+            result.data[i].link = CDN_URL + result.data[i].link
           }
         }
         return result
@@ -209,6 +210,7 @@ export default new Vuex.Store({
       return apiCall(context.getters.token, 'delete', '/attachment/' + payload.toString() + '/', {}).then()
     },
     ADD_AVATAR: async (context, payload) => {
+      console.log(payload)
       return apiCall(context.getters.token, 'post', '/avatars/', payload).then()
     },
     DELETE_AVATAR: async (context) => {

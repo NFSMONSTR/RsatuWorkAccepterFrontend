@@ -9,10 +9,17 @@
       ></v-divider>
       <v-spacer></v-spacer>
     </v-toolbar>-->
-    <PopupDialog :open="delete_dialog" @yes="del_user(current)" @end="delete_dialog = false">Удалить документ?</PopupDialog>
+    <PopupDialog
+      :open="delete_dialog"
+      @yes="del_user(current)"
+      @end="delete_dialog = false">Удалить пользователя?</PopupDialog>
     <v-data-table
       :headers="headers"
       :items="users"
+      :loading="loading"
+      :hide-actions="true"
+      :items-per-page="10"
+      :pagination.sync="pagination"
       class="elevation-1"
     >
       <template v-slot:items="props">
@@ -23,7 +30,7 @@
         <td>{{ props.item.third_name }}</td>
         <td>{{ props.item.group }}</td>
         <td>{{ props.item.year }}</td>
-        <td>{{ props.item.permission_level }}</td>
+        <td>{{ props.item.role }}</td>
         <td class="justify-center layout px-0">
           <!--<v-icon
             small
@@ -45,6 +52,13 @@
         <v-alert type="info">Здесь пока никого нет :(</v-alert>
       </template>
     </v-data-table>
+    <div class="text-xs-center pt-2">
+      <v-pagination
+        v-model="page"
+        :length="count"
+        :value="page"
+        @input="load_users"/>
+    </div>
   </div>
 </template>
 
@@ -66,29 +80,26 @@ export default {
         { text: 'third_name', value: 'third_name' },
         { text: 'group', value: 'group' },
         { text: 'year', value: 'year' },
-        { text: 'permission_level', value: 'permission_level' },
+        { text: 'role', value: 'role' },
         { text: 'actions', value: '' }
       ],
       users: [
-        {
-          id: 0,
-          username: 'No connection',
-          first_name: 'No connection',
-          second_name: 'No connection',
-          third_name: 'No connection',
-          group: null,
-          year: 0,
-          permission_level: 0
-        }
       ],
+      loading: true,
+      pagination: {
+        page: 1,
+        rowsPerPage: 10,
+      },
+      size: 10,
+      page: 1,
+      count: -1,
       delete_dialog: false,
       current: undefined
     }
   },
+
   mounted () {
-    this.$store.dispatch('GET_USERS', this.id).then((result) => {
-      this.users = result.data.users
-    })
+    this.load_users(1);
   },
   methods: {
     del_user: function (user) {
@@ -97,8 +108,17 @@ export default {
         const index = this.users.indexOf(user)
         this.users.splice(index, 1)
       })
+    },
+    load_users: function (page) {
+      this.loading = true;
+      this.$store.dispatch('GET_USERS', {page: page, size: this.pagination.rowsPerPage}).then((result) => {
+        this.users = result.data.data
+        //this.pagination = {page: result.data.page, rowsPerPage: result.data.size, count: result.data.count}
+        this.count = result.data.count;
+        this.loading = false;
+      })
     }
-  }
+  },
 }
 </script>
 

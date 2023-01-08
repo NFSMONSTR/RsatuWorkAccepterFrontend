@@ -1,10 +1,10 @@
 <template>
   <v-app id="app">
-    <NavMenu v-if="$store.getters.isLoggedIn"></NavMenu>
-    <NavBar></NavBar>
+    <NavMenu v-if="$store.getters.isLoggedIn"/>
+    <NavBar/>
     <v-content>
       <v-fade-transition mode="out-in">
-        <router-view></router-view>
+        <router-view/>
       </v-fade-transition>
     </v-content>
   </v-app>
