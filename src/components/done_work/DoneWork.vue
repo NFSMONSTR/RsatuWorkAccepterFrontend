@@ -37,7 +37,7 @@
 
 <script>
 
-import {CDN_URL} from '../util/api'
+import {CDN_URL} from '../../util/api'
 import VueMarkdown from 'vue-markdown'
 
 export default {

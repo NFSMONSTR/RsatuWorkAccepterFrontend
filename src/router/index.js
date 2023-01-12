@@ -3,19 +3,18 @@ import Router from 'vue-router'
 import Login from '../components/auth/Login'
 // import Register from '@/components/Register'
 import store from '../store'
-import Profile from '../components/Profile'
-import UsersList from '../components/UsersList'
-import Admin from '../components/Admin'
-import WorksList from '../components/WorksList'
-import AddWork from '../components/AddWork'
-import Work from '../components/Work'
-import AttachmentsList from '../components/AttachmentsList'
-import AddAttachment from '../components/AddAttachment'
-import AddUser from '../components/AddUser'
-import GroupsList from "../components/GroupsList.vue";
-import AddDoneWork from "../components/AddDoneWork.vue";
-import DoneWorksList from "../components/DoneWorksList.vue";
-import DoneWork from "../components/DoneWork.vue";
+import Profile from '../components/user/Profile.vue'
+import UsersList from '../components/user/UsersList.vue'
+import WorksList from '../components/work/WorksList.vue'
+import AddWork from '../components/work/AddWork.vue'
+import Work from '../components/work/Work.vue'
+import AttachmentsList from '../components/attachments/AttachmentsList.vue'
+import AddAttachment from '../components/attachments/AddAttachment.vue'
+import AddUser from '../components/user/AddUser.vue'
+import GroupsList from "../components/group/GroupsList.vue";
+import AddDoneWork from "../components/done_work/AddDoneWork.vue";
+import DoneWorksList from "../components/done_work/DoneWorksList.vue";
+import DoneWork from "../components/done_work/DoneWork.vue";
 
 Vue.use(Router)
 
@@ -115,12 +114,6 @@ let router = new Router({
       name: 'add_attachment',
       component: AddAttachment,
       beforeEnter: ifAuthenticated
-    },
-    {
-      path: '/admin',
-      name: 'admin',
-      component: Admin,
-      beforeEnter: ifAdmin
     },
     {
       path: '/add_work',

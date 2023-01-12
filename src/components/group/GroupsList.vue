@@ -79,7 +79,7 @@
 
 <script>
 
-import PopupDialog from './dialogs/PopupDialog'
+import PopupDialog from '../dialogs/PopupDialog.vue'
 
 export default {
   name: 'GroupsList',

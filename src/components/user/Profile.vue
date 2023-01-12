@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import AvatarDialog from './dialogs/AvatarDialog'
+import AvatarDialog from '../dialogs/AvatarDialog.vue'
 export default {
   name: 'Profile',
   components: {AvatarDialog},

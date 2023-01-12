@@ -98,9 +98,9 @@
 
 <script>
 
-import {CDN_URL} from '../util/api'
+import {CDN_URL} from '../../util/api'
 import VueMarkdown from 'vue-markdown'
-import VueMathjax from './util/VueMathjax'
+import VueMathjax from '../util/VueMathjax.vue'
 
 export default {
   name: 'Work',

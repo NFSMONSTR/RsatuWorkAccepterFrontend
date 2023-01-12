@@ -59,7 +59,7 @@
 
 <script>
 import VueMarkdown from 'vue-markdown'
-import AttachmentSelectDialog from "./dialogs/AttachmentSelectDialog.vue";
+import AttachmentSelectDialog from "../dialogs/AttachmentSelectDialog.vue";
 
 export default {
   name: 'AddDoneWork',
