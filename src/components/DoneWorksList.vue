@@ -53,7 +53,6 @@ export default {
       this.loading = true
       this.$store.dispatch('GET_DONE_WORKS', {page: page, size: this.size}).then((result) => {
         this.doneWorks = result.data.data
-        console.log(this.doneWorks[0].work.name)
         this.page = page
         this.count = result.data.count;
         this.loading = false;

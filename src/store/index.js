@@ -12,7 +12,8 @@ async function apiCall (token, method, url, data, params = {}) {
   try {
     return await axios.request({
       headers: {
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token,
+        'ngrok-skip-browser-warning': '1',
       },
       params: params,
       method: method,
@@ -85,7 +86,8 @@ export default new Vuex.Store({
         method: 'get',
         url: API_ENDPOINT + '/auth/',
         headers: {
-          'Authorization': 'Basic ' + btoa(payload.username + ':' + payload.password)
+          'Authorization': 'Basic ' + btoa(payload.username + ':' + payload.password),
+          'ngrok-skip-browser-warning': '1',
         }
       })
       context.commit('SET_TOKEN', result.data.token)
@@ -144,14 +146,14 @@ export default new Vuex.Store({
     UPDATE_USER_INFO: async (context) => {
       let result = await context.dispatch('GET_USER_INFO', context.getters.userId)
       if (result.status === 200) {
-        if (result.data.group != null) {
-          let res = await context.dispatch('GET_GROUP', result.data.group)
-          if (res.status === 200) {
-            result.data.group = res.data
-          } else {
-            console.error(result)
-          }
-        }
+        // if (result.data.group != null) {
+        //   let res = await context.dispatch('GET_GROUP', result.data.group)
+        //   if (res.status === 200) {
+        //     result.data.group = res.data
+        //   } else {
+        //     console.error(result)
+        //   }
+        // }
         context.commit('UPDATE_USER_INFO', result.data)
       } else {
         console.error(result)

@@ -10,7 +10,7 @@
           fluid
           style="padding-left:0px;">
           <v-layout row>
-            <strong class="title">{{ "Результат выполнения лабораторной работы:" + doneWork.work.name }} - {{ doneWork.work.subject }}</strong>
+            <strong class="title">{{ "Результат выполнения лабораторной работы: " + doneWork.work.name }} - {{ doneWork.work.subject }}</strong>
           </v-layout>
           <v-layout row>
             {{ doneWork.author.first_name + ' ' + doneWork.author.second_name }}

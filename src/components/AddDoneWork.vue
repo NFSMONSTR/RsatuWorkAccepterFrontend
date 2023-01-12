@@ -99,7 +99,7 @@ export default {
           this.$store.dispatch('CONNECT_ATTACHMENT', {connectionId: result.data.id, attachmentId: attachment.id, connectionType: 'DONEWORK'})
         }
         this.loading = false
-        this.$router.push({ name: 'works_list' })
+        this.$router.push({ name: 'done_works' })
       })
     }
   }

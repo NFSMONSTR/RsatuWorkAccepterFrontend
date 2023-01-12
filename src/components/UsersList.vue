@@ -28,7 +28,7 @@
         <td>{{ props.item.first_name }}</td>
         <td>{{ props.item.second_name }}</td>
         <td>{{ props.item.third_name }}</td>
-        <td>{{ props.item.group }}</td>
+        <td>{{ props.item.group ? props.item.group.name : '-' }}</td>
         <td>{{ props.item.year }}</td>
         <td>{{ props.item.role }}</td>
         <td class="justify-center layout px-0">

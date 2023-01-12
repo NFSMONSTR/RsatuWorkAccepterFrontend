@@ -47,8 +47,8 @@
           />
 
           <v-select
-            :items="groups"
-            v-model="user.group"
+            :items="groupNames"
+            v-model="userGroup"
             label="Группа"
             required
           />
@@ -105,7 +105,8 @@ export default {
   name: 'AddUser',
   data: function () {
     return {
-      groups: ['Нет'],
+      groupNames: ['Нет'],
+      groups: [],
       alert: false,
       alert_text: '',
       alert_type: 'success',
@@ -123,18 +124,25 @@ export default {
         group: null,
         year: (() => { let y = new Date().getYear(); if (y < 1900) y += 1900; return y })(),
         role: 'USER'
-      }
+      },
+      userGroup: null,
     }
   },
   mounted () {
     this.$store.dispatch('GET_GROUPS').then((result) => {
-      this.groups.concat(result.data)
+      const names = result.data.map(g => g.name)
+      this.groupNames.push(...names)
+      this.groups = result.data
+      console.log(this.groupNames, this.groups, result.data.map(g => g.name))
     })
   },
   methods: {
     add_single_user: function () {
       let payload = this.user
-      if (payload.group === 'Нет') {
+      const groupIdx = this.groups.map(g => g.name).indexOf(this.userGroup);
+      if (groupIdx !== -1) {
+        payload.group = {id:this.groups[groupIdx].id}
+      } else {
         payload.group = null
       }
       this.$store.dispatch('ADD_USER', payload).then((result) => {
