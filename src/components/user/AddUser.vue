@@ -158,6 +158,7 @@ export default {
     },
     add_multiple: function () {
       let csv = Papa.parse(this.multiple_csv)
+      const groups = this.groups
       if (csv.errors.length !== 0) {
         this.alert1_text = 'Ошибка в формате CSV'
         this.alert1_type = 'error'
@@ -178,7 +179,7 @@ export default {
           if (user.group === '-') {
             user.group = null
           } else {
-            user.group = +user.group
+            user.group = groups.find(g=>g.id===(+user.group))
           }
           users.push(user)
         })
