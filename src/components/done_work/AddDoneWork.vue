@@ -4,6 +4,13 @@
       primary-title 
       class="title">Сдать лабораторную работу</v-card-title>
     <v-card-text>
+      <v-alert
+        v-model="alert"
+        :type="alert_type"
+        dismissible
+      >
+        {{ alert_text }}
+      </v-alert>
       <form>
         <v-textarea
           v-model="doneWork.text"
@@ -38,7 +45,7 @@
           @click="attachmentDialog = true">Прикрепить файл</v-btn>
 
         <v-btn
-          v-if="!loading"
+          v-if="!loading && !(alert && alert_type==='success')"
           color="primary" 
           @click="submit">Сдать работу</v-btn>
 
@@ -81,6 +88,9 @@ export default {
         attachments: [],
       },
       loading: false,
+      alert: false,
+      alert_text: '',
+      alert_type: 'success',
     }
   },
   methods: {
@@ -99,7 +109,15 @@ export default {
           this.$store.dispatch('CONNECT_ATTACHMENT', {connectionId: result.data.id, attachmentId: attachment.id, connectionType: 'DONEWORK'})
         }
         this.loading = false
-        this.$router.push({ name: 'done_works' })
+        if ([200,201].includes(result.status)) {
+          this.alert = true
+          this.alert_text = 'Лабораторная работа отправлена'
+          this.alert_type = 'success'
+        } else {
+          this.alert = true
+          this.alert_text = 'Произошла ошибка'
+          this.alert_type = 'error'
+        }
       })
     }
   }

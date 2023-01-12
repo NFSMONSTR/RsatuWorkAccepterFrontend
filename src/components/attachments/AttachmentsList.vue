@@ -12,12 +12,12 @@
           </v-list-tile-content>
           <v-list-tile-action>
             <v-layout row>
-              <v-btn icon>
-                <v-icon 
-                  color="grey lighten-0" 
-                  @click.stop="work_select_dialog = true; current = item.id">attach_file</v-icon>
-              </v-btn>
-              <v-spacer/>
+              <!--              <v-btn icon>-->
+              <!--                <v-icon -->
+              <!--                  color="grey lighten-0" -->
+              <!--                  @click.stop="work_select_dialog = true; current = item.id">attach_file</v-icon>-->
+              <!--              </v-btn>-->
+              <!--              <v-spacer/>-->
               <v-btn icon>
                 <v-icon 
                   color="red lighten-1" 

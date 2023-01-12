@@ -12,6 +12,13 @@
         primary-title 
         class="title">{{ id ? "Изменить работу" : "Добавить работу" }}</v-card-title>
       <v-card-text>
+        <v-alert
+          v-model="alert"
+          :type="alert_type"
+          dismissible
+        >
+          {{ alert_text }}
+        </v-alert>
         <form>
 
           <v-text-field
@@ -153,6 +160,9 @@ export default {
       loadingForm: false,
       attachmentDialog: false,
       groupDialog: false,
+      alert: false,
+      alert_text: '',
+      alert_type: 'success',
     }
   },
   mounted() {
@@ -212,7 +222,15 @@ export default {
           this.$store.dispatch('DISCONNECT_WORK_GROUP', {workId: result.data.id, groupId: oldGroup})
         }
         this.loading = false;
-        this.$router.push({ name: 'works_list' })
+        if ([200,201].includes(result.status)) {
+          this.alert = true
+          this.alert_text = this.$props.id ? 'Лабораторная работа успешно отредактирована' :'Лабораторная работа успешно создана'
+          this.alert_type = 'success'
+        } else {
+          this.alert = true
+          this.alert_text = 'Произошла ошибка'
+          this.alert_type = 'error'
+        }
       })
     },
     load_work: function (id) {

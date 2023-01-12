@@ -93,11 +93,11 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-      <br v-if="work.fullGroups && work.fullGroups.length>0">
-      <b v-if="work.fullGroups && work.fullGroups.length>0">Доступно группам:</b>
-      <div v-if="work.fullGroups && work.fullGroups.length>0">
+      <br v-if="fullGroups && fullGroups.length>0">
+      <b v-if="fullGroups && fullGroups.length>0">Доступно группам:</b>
+      <div v-if="fullGroups && fullGroups.length>0">
         <v-chip
-          v-for="(group, i) in work.fullGroups"
+          v-for="(group, i) in fullGroups"
           :key="i">{{ group.name }}</v-chip>
       </div>
     </v-card-text>
@@ -130,10 +130,10 @@ export default {
         attachments: [],
         done_works: [],
         groups: [],
-        fullGroups: []
       },
       CDN_URL,
-      delete_dialog: false
+      delete_dialog: false,
+      fullGroups: []
     }
   },
   mounted () {
@@ -161,11 +161,11 @@ export default {
       this.$router.push({name: 'work_edit', params: {workId: this.work.id}})
     },
     load_groups: function () {
-      this.work.fullGroups = []
+      this.fullGroups = []
       for (let groupId of this.work.groups) {
         this.$store.dispatch('GET_GROUP', groupId).then((result) => {
           if (result.status === 200) {
-            this.work.fullGroups.push(result.data)
+            this.fullGroups.push(result.data)
           }
         })
       }

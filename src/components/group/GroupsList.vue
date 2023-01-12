@@ -56,6 +56,7 @@
       :items="groups"
       :loading="loading"
       :hide-actions="true"
+      no-data-text="Групп нет"
       class="elevation-1"
     >
       <template v-slot:items="props">
@@ -71,9 +72,6 @@
             delete
           </v-icon>
         </td>
-      </template>
-      <template v-slot:no-data>
-        <v-alert type="info">Групп нет</v-alert>
       </template>
     </v-data-table>
   </div>
@@ -94,8 +92,7 @@ export default {
         { text: 'Доступные работы', value: 'works' },
         { text: 'Действия', value: ''}
       ],
-      groups: [
-      ],
+      groups: [],
       loading: true,
       delete_dialog: false,
       current: undefined,

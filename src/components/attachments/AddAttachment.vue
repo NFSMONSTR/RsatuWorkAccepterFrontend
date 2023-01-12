@@ -4,6 +4,13 @@
       primary-title 
       class="title">Добавить документ</v-card-title>
     <v-card-text>
+      <v-alert
+        v-model="alert"
+        :type="alert_type"
+        dismissible
+      >
+        {{ alert_text }}
+      </v-alert>
       <form>
         Тип документа:
         <v-radio-group 
@@ -56,7 +63,10 @@ export default {
       name: '',
       link: '',
       file_name: '',
-      file_data: ''
+      file_data: '',
+      alert: false,
+      alert_text: '',
+      alert_type: 'success',
     }
   },
   methods: {
@@ -75,7 +85,17 @@ export default {
           file: this.file_data
         }
       }
-      this.$store.dispatch('ADD_ATTACHMENT', payload).then()
+      this.$store.dispatch('ADD_ATTACHMENT', payload).then((result) => {
+        if ([200,201].includes(result.status)) {
+          this.alert = true
+          this.alert_text = this.is_link ? 'Ссылка успешно добавлена' : 'Файл успешно прикреплен'
+          this.alert_type = 'success'
+        } else {
+          this.alert = true
+          this.alert_text = 'Произошла ошибка'
+          this.alert_type = 'error'
+        }
+      })
     },
     onFilePicked (e) {
       const files = e.target.files
