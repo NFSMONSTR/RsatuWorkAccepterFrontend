@@ -92,6 +92,13 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
+      <br v-if="work.fullGroups && work.fullGroups.length>0">
+      <b v-if="work.fullGroups && work.fullGroups.length>0">Доступно группам:</b>
+      <div v-if="work.fullGroups && work.fullGroups.length>0">
+        <v-chip
+          v-for="(group, i) in work.fullGroups"
+          :key="i">{{ group.name }}</v-chip>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -120,7 +127,9 @@ export default {
         author: 0,
         markup: 0,
         attachments: [],
-        done_works: []
+        done_works: [],
+        groups: [],
+        fullGroups: []
       },
       CDN_URL,
       delete_dialog: false
@@ -135,16 +144,27 @@ export default {
       this.$store.dispatch('GET_ATTACHMENTS_BY_LIST', this.work.attachments).then((result) => {
         this.work.attachments = result
       })
+      this.load_groups()
     })
   },
   methods: {
     delete_work: function () {
       this.$store.dispatch('DELETE_WORK', this.work.id).then(() => {
-        this.$router.push({ name: 'works_list' })
+        this.$router.push({name: 'works_list'})
       })
     },
     play_work: function () {
-      this.$router.push({name:'do_work', params: {workId: this.work.id}})
+      this.$router.push({name: 'do_work', params: {workId: this.work.id}})
+    },
+    load_groups: function () {
+      this.work.fullGroups = []
+      for (let groupId of this.work.groups) {
+        this.$store.dispatch('GET_GROUP', groupId).then((result) => {
+          if (result.status === 200) {
+            this.work.fullGroups.push(result.data)
+          }
+        })
+      }
     }
   },
 }

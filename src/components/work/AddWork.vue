@@ -70,7 +70,20 @@
           v-if="!loading"
           color="secondary"
           @click="attachmentDialog = true">Прикрепить файл</v-btn>
-
+        <br v-if="groups.length>0">
+        <b v-if="groups.length>0">Доступно группам:</b>
+        <div v-if="groups.length>0">
+          <v-chip
+            v-for="(group, i) in groups"
+            :key="i"
+            :close="!loading"
+            @input="removeGroup(group.id)">{{ group.name }}</v-chip>
+        </div>
+        <v-btn
+          v-if="!loading"
+          color="secondary"
+          @click="groupDialog = true">Добавить группу</v-btn>
+        <br>
         <v-btn
           v-if="!loading"
           color="primary"
@@ -88,6 +101,10 @@
       :open="attachmentDialog"
       @end="attachmentDialog = false"
       @result="addAttachment"/>
+    <group-select-dialog
+      :open="groupDialog"
+      @end="groupDialog = false"
+      @result="addGroup"/>
   </v-card>
 </template>
 
@@ -95,10 +112,12 @@
 import VueMarkdown from 'vue-markdown'
 import VueMathjax from '../util/VueMathjax.vue'
 import AttachmentSelectDialog from "../dialogs/AttachmentSelectDialog.vue";
+import GroupSelectDialog from "../dialogs/GroupSelectDialog.vue";
 
 export default {
   name: 'AddWork',
   components: {
+    GroupSelectDialog,
     AttachmentSelectDialog,
     VueMarkdown,
     VueMathjax
@@ -129,11 +148,22 @@ export default {
     removeAttachment: function (attachmentId) {
       this.attachments = this.attachments.filter((item) => {return item.id !== attachmentId});
     },
+    addGroup: function (result) {
+      if (this.groups.map(g => g.id).indexOf(result.id) === -1) {
+        this.groups.push(result)
+      }
+    },
+    removeGroup: function (groupId) {
+      this.groups = this.groups.filter((item) => {return item.id !== groupId});
+    },
     submit: function () {
       this.loading = true;
       this.$store.dispatch('ADD_WORK', this.work).then((result) => {
-        for (let attachment of this.doneWork.attachments) {
+        for (let attachment of this.attachments) {
           this.$store.dispatch('CONNECT_ATTACHMENT', {connectionId: result.data.id, attachmentId: attachment.id, connectionType: 'WORK'})
+        }
+        for (let group of this.groups) {
+          this.$store.dispatch('CONNECT_WORK_GROUP', {workId: result.data.id, groupId: group.id})
         }
         this.loading = false;
         this.$router.push({ name: 'works_list' })

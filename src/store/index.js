@@ -186,6 +186,9 @@ export default new Vuex.Store({
     DELETE_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'delete', '/work/' + payload.toString() + '/', {}).then()
     },
+    CONNECT_WORK_GROUP: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/work/' + payload.workId + '/share/' + payload.groupId + '/', {}).then()
+    },
     ADD_DONE_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/donework/', payload).then()
     },
