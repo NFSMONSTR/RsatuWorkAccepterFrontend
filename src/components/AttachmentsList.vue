@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import PopupDialog from '@/components/PopupDialog'
-import WorksSelectDialog from '@/components/WorksSelectDialog'
+import PopupDialog from '@/components/dialogs/PopupDialog'
+import WorksSelectDialog from '@/components/dialogs/WorksSelectDialog'
 
 export default {
   name: 'AttachmentsList',

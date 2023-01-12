@@ -79,7 +79,7 @@
 
 <script>
 
-import PopupDialog from '@/components/PopupDialog'
+import PopupDialog from './dialogs/PopupDialog'
 
 export default {
   name: 'GroupsList',

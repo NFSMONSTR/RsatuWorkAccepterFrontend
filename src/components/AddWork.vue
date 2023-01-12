@@ -94,7 +94,7 @@
 <script>
 import VueMarkdown from 'vue-markdown'
 import VueMathjax from '@/components/VueMathjax'
-import AttachmentSelectDialog from "./AttachmentSelectDialog.vue";
+import AttachmentSelectDialog from "./dialogs/AttachmentSelectDialog.vue";
 
 export default {
   name: 'AddWork',
@@ -117,6 +117,7 @@ export default {
       groups: [],
       loading: false,
       attachmentDialog: false,
+      groupDialog: false,
     }
   },
   methods: {

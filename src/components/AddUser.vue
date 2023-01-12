@@ -166,16 +166,15 @@ export default {
       } else {
         let users = []
         csv.data.forEach(function (line) {
-          console.log(line)
           let user = {
             username: line[0],
             first_name: line[1],
             second_name: line[2],
             third_name: line[3],
             password: line[4],
-            group: line[5],
+            group: +line[5],
             year: +line[6],
-            role: +line[7]
+            role: line[7]
           }
           if (user.group === '-') {
             user.group = null

@@ -68,8 +68,8 @@
 
 <script>
 
-import PopupDialog from '@/components/PopupDialog'
-import GroupSelectDialog from "./GroupSelectDialog.vue";
+import PopupDialog from './dialogs/PopupDialog'
+import GroupSelectDialog from "./dialogs/GroupSelectDialog.vue";
 
 export default {
   name: 'UsersList',
