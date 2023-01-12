@@ -104,6 +104,13 @@ let router = new Router({
       props: true
     },
     {
+      path: '/work/edit/:id/',
+      name: 'work_edit',
+      component: AddWork,
+      beforeEnter: ifAuthenticated,
+      props: true
+    },
+    {
       path: '/attachments/',
       name: 'attachments_list',
       component: AttachmentsList,

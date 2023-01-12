@@ -24,14 +24,15 @@
           <v-icon color="green lighten-1">play_arrow</v-icon>
         </v-btn>
 
-        <v-btn 
-          v-if="work.author.id === $store.getters.userId" 
-          icon>
+        <v-btn
+          v-if="work.author.id === $store.getters.userId || $store.getters.user.permission_level >= 10"
+          icon
+          @click="edit_work">
           <v-icon color="green lighten-1">edit</v-icon>
         </v-btn>
 
         <v-dialog
-          v-if="work.author.id === $store.getters.userId"
+          v-if="work.author.id === $store.getters.userId || $store.getters.user.permission_level >= 10"
           v-model="delete_dialog"
           width="500"
         >
@@ -156,6 +157,9 @@ export default {
     play_work: function () {
       this.$router.push({name: 'do_work', params: {workId: this.work.id}})
     },
+    edit_work: function () {
+      this.$router.push({name: 'work_edit', params: {workId: this.work.id}})
+    },
     load_groups: function () {
       this.work.fullGroups = []
       for (let groupId of this.work.groups) {
@@ -165,7 +169,7 @@ export default {
           }
         })
       }
-    }
+    },
   },
 }
 </script>

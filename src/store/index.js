@@ -193,6 +193,9 @@ export default new Vuex.Store({
     CONNECT_WORK_GROUP: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/work/' + payload.workId + '/share/' + payload.groupId + '/', {}).then()
     },
+    DISCONNECT_WORK_GROUP: async (context, payload) => {
+      return apiCall(context.getters.token, 'delete', '/work/' + payload.workId + '/share/' + payload.groupId + '/', {}).then()
+    },
     ADD_DONE_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/donework/', payload).then()
     },
@@ -213,6 +216,9 @@ export default new Vuex.Store({
     },
     CONNECT_ATTACHMENT: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/attachment/connection/', payload).then()
+    },
+    DISCONNECT_ATTACHMENT: async (context, payload) => {
+      return apiCall(context.getters.token, 'delete', '/attachment/connection/', payload).then()
     },
     GET_ATTACHMENTS: async (context) => {
       return apiCall(context.getters.token, 'get', '/attachment/', {}).then((result) => {
