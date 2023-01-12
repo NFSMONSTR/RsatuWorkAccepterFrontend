@@ -94,7 +94,7 @@ export default {
         {
           type: 0,
           header: 'Выполненные работы',
-          to: 'done_works',
+          to: {name :'done_works'},
           icon: 'assignment_turned_in',
           perm: 0,
         },

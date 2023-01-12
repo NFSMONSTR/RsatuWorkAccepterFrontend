@@ -198,6 +198,9 @@ export default new Vuex.Store({
     GET_DONE_WORK: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/donework/'+payload.toString()+'/', {}).then()
     },
+    GET_COMMENT_WORK: async (context, payload) => {
+      return apiCall(context.getters.token, 'get', '/comment/' + payload.toString() + '/', {}).then()
+    },
     ADD_ATTACHMENT: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/attachment/', payload).then()
     },

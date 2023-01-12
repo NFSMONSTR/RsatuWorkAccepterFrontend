@@ -141,7 +141,7 @@ let router = new Router({
       beforeEnter: ifAuthenticated,
     },
     {
-      path: '/done_work',
+      path: '/done_work/:id',
       name: 'done_work',
       component: DoneWork,
       beforeEnter: ifAuthenticated,
