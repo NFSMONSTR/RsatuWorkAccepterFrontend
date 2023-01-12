@@ -156,8 +156,8 @@ export default {
     }
   },
   mounted() {
-    if (this.id) {
-      this.load_work(this.id)
+    if (this.$props.id) {
+      this.load_work(this.$props.id)
     }
   },
   methods: {
@@ -179,8 +179,8 @@ export default {
     },
     submit: function () {
       this.loading = true;
-      if (this.id) {
-        this.work.id = this.id
+      if (this.$props.id) {
+        this.work.id = this.$props.id
       }
       this.$store.dispatch('ADD_WORK', this.work).then((result) => {
         for (let attachment of this.attachments) {

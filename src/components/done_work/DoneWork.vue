@@ -22,6 +22,12 @@
               {{ doneWork.author.first_name + ' ' + doneWork.author.second_name }}
             </v-layout>
           </v-container>
+          <v-btn
+            v-if="$store.getters.user.permission_level >= 5 && !doneWork.commentId"
+            icon
+            @click="accept_work">
+            <v-icon color="green lighten-1">rate_review</v-icon>
+          </v-btn>
         </v-layout>
 
         <b>Описание работы:</b>
@@ -138,19 +144,19 @@ export default {
               switch (comment.mark) {
                 case 'EXCELLENT':
                   comment.mark = 'Отлично'
-                  comment.markColor = 'green'
+                  comment.markColor = '#0d8f32'
                   break;
                 case 'GOOD':
                   comment.mark = 'Хорошо'
-                  comment.markColor = 'green'
+                  comment.markColor = '#0d8f32'
                   break;
                 case 'FAIR':
                   comment.mark = 'Удовлетворительно'
-                  comment.markColor = 'yellow'
+                  comment.markColor = '#c4d417'
                   break;
                 case 'BAD':
                   comment.mark = 'Не удовлетворительно'
-                  comment.markColor = 'red'
+                  comment.markColor = '#b32414'
                   break;
               }
               this.comment = comment
@@ -164,6 +170,9 @@ export default {
     })
   },
   methods: {
+    accept_work: function () {
+      this.$router.push({ name: 'comment_work', params: { id: this.$props.id }})
+    },
   },
 }
 </script>

@@ -15,6 +15,7 @@ import GroupsList from "../components/group/GroupsList.vue";
 import AddDoneWork from "../components/done_work/AddDoneWork.vue";
 import DoneWorksList from "../components/done_work/DoneWorksList.vue";
 import DoneWork from "../components/done_work/DoneWork.vue";
+import AddCommentWork from "../components/comment_work/AddCommentWork.vue";
 
 Vue.use(Router)
 
@@ -152,6 +153,13 @@ let router = new Router({
       name: 'done_work',
       component: DoneWork,
       beforeEnter: ifAuthenticated,
+      props: true,
+    },
+    {
+      path: '/done_work/accept/:id',
+      name: 'comment_work',
+      component: AddCommentWork,
+      beforeEnter: ifTutor,
       props: true,
     }
   ]
