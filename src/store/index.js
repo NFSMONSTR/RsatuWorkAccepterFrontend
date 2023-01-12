@@ -159,6 +159,9 @@ export default new Vuex.Store({
         console.error(result)
       }
     },
+    ADD_USER_TO_GROUP: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/user/'+payload.userId.toString()+'/group/'+payload.groupId.toString()+'/',{}).then()
+    },
     GET_GROUP: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/group/' + payload.toString() + '/', {}).then()
     },

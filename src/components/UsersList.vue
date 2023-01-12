@@ -32,13 +32,13 @@
         <td>{{ props.item.year }}</td>
         <td>{{ props.item.role }}</td>
         <td class="justify-center layout px-0">
-          <!--<v-icon
+          <v-icon
             small
             class="mr-2"
-            @click="editItem(props.item)"
+            @click="group_select_dialog = true; current = props.item"
           >
-            edit
-          </v-icon>-->
+            group_add
+          </v-icon>
           <v-icon
             small
             class="mr-4"
@@ -59,17 +59,21 @@
         :value="page"
         @input="load_users"/>
     </div>
+    <group-select-dialog
+      :open="group_select_dialog"
+      @result="add_to_group"
+      @end="group_select_dialog = false"/>
   </div>
 </template>
 
 <script>
 
 import PopupDialog from '@/components/PopupDialog'
+import GroupSelectDialog from "./GroupSelectDialog.vue";
 
 export default {
   name: 'UsersList',
-  components: {PopupDialog},
-  props: ['id'],
+  components: {GroupSelectDialog, PopupDialog},
   data: function () {
     return {
       headers: [
@@ -94,7 +98,8 @@ export default {
       page: 1,
       count: -1,
       delete_dialog: false,
-      current: undefined
+      current: undefined,
+      group_select_dialog: false,
     }
   },
 
@@ -103,10 +108,15 @@ export default {
   },
   methods: {
     del_user: function (user) {
-      this.$store.dispatch('DELETE_USER', user.id).then((result) => {
-        // todo use result
-        const index = this.users.indexOf(user)
-        this.users.splice(index, 1)
+      this.$store.dispatch('DELETE_USER', user.id).then(() => {
+        // const index = this.users.indexOf(user)
+        // this.users.splice(index, 1)
+        this.load_users(this.page)
+      })
+    },
+    add_to_group: function (group) {
+      this.$store.dispatch('ADD_USER_TO_GROUP', {userId: this.current.id, groupId: group.id}).then(() => {
+        this.load_users(this.page)
       })
     },
     load_users: function (page) {
