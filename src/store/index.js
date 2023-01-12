@@ -162,6 +162,9 @@ export default new Vuex.Store({
     ADD_USER_TO_GROUP: async (context, payload) => {
       return apiCall(context.getters.token, 'post', '/user/'+payload.userId.toString()+'/group/'+payload.groupId.toString()+'/',{}).then()
     },
+    ADD_GROUP: async (context, payload) => {
+      return apiCall(context.getters.token, 'post', '/group/', payload).then()
+    },
     GET_GROUP: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/group/' + payload.toString() + '/', {}).then()
     },
