@@ -12,7 +12,7 @@
 
 <script>
 import NavBar from './components/NavBar'
-import NavMenu from '@/components/NavMenu'
+import NavMenu from './components/NavMenu'
 
 function updToken (self) {
   if ((self.$store.getters.isLoggedIn) && ((self.$store.getters.tokenLifetime - Math.floor(Date.now() / 1000) < 100) || (self.$store.getters.tokenLifetime === undefined))) {

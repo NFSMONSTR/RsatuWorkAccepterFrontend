@@ -45,7 +45,12 @@
 <script>
 export default {
   name: 'AvatarDialog',
-  props: ['open'],
+  props: {
+    open: {
+      type: Boolean,
+      default: false,
+    }
+  },
   data: function () {
     return {
       file_name: '',
@@ -70,7 +75,7 @@ export default {
     },
     uploadAvatar () {
       if ((this.file_name !== '') && (this.file_data !== '')) {
-        this.$store.dispatch('ADD_AVATAR', { 'file': this.file_data }).then((result) => {
+        this.$store.dispatch('ADD_AVATAR', { 'file': this.file_data }).then(() => {
           this.$emit('update')
           this.$emit('end')
         })

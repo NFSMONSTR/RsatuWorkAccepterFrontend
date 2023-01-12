@@ -52,7 +52,7 @@
         <v-list-group
           v-if="(m.type === 1) && ($store.getters.user.permission_level>=m.perm)"
           :prepend-icon="m.icon"
-          no-action=""
+          no-action
           value="true"
         >
           <template v-slot:activator>

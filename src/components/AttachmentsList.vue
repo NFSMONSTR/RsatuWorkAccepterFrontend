@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import PopupDialog from '@/components/dialogs/PopupDialog'
-import WorksSelectDialog from '@/components/dialogs/WorksSelectDialog'
+import PopupDialog from './dialogs/PopupDialog'
+import WorksSelectDialog from './dialogs/WorksSelectDialog'
 
 export default {
   name: 'AttachmentsList',
@@ -70,7 +70,7 @@ export default {
       window.location.href = to
     },
     delete_attachment: function (id) {
-      this.$store.dispatch('DELETE_ATTACHMENT', id).then((result) => {
+      this.$store.dispatch('DELETE_ATTACHMENT', id).then(() => {
         this.load_attachments()
       })
     },

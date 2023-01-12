@@ -8,7 +8,7 @@
         mb-3>
         <v-container
           fluid
-          style="padding-left:0px;">
+          style="padding-left:0">
           <v-layout row>
             <strong class="title">{{ "Результат выполнения лабораторной работы: " + doneWork.work.name }} - {{ doneWork.work.subject }}</strong>
           </v-layout>
@@ -16,52 +16,6 @@
             {{ doneWork.author.first_name + ' ' + doneWork.author.second_name }}
           </v-layout>
         </v-container>
-
-        <v-dialog
-          v-if="doneWork.author.id === $store.getters.userId"
-          v-model="delete_dialog"
-          width="500"
-        >
-          <template v-slot:activator="{ on }">
-<!--            <v-btn -->
-<!--              icon -->
-<!--              v-on="on">-->
-<!--              <v-icon color="red lighten-1">delete_forever</v-icon>-->
-<!--            </v-btn>-->
-          </template>
-
-          <v-card>
-            <v-card-title
-              class="headline lighten-1"
-            >
-              Удаление работы
-            </v-card-title>
-
-            <v-card-text>
-              Данное действие нельзя отменить. Удалить работу?
-            </v-card-text>
-
-            <v-divider/>
-
-            <v-card-actions>
-              <v-spacer/>
-              <v-btn
-                color="primary"
-                flat
-                @click="delete_dialog = false"
-              >
-                Нет
-              </v-btn>
-              <v-btn
-                color="error"
-                flat
-                @click="delete_dialog = false; delete_work()"
-              >
-                Да
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </v-layout>
 
       <b>Описание работы:</b>
@@ -83,15 +37,13 @@
 
 <script>
 
-import {CDN_URL} from '@/util/api'
+import {CDN_URL} from '../util/api'
 import VueMarkdown from 'vue-markdown'
-import VueMathjax from '@/components/VueMathjax'
 
 export default {
   name: 'DoneWork',
   components: {
     VueMarkdown,
-    VueMathjax
   },
   props: {
     id: {
@@ -137,14 +89,6 @@ export default {
     })
   },
   methods: {
-    delete_work: function () {
-      this.$store.dispatch('DELETE_WORK', this.work.id).then((result) => {
-        this.$router.push({ name: 'works_list' })
-      })
-    },
-    play_work: function () {
-      this.$router.push({name:'do_work', params: {workId: this.work.id}})
-    }
   },
 }
 </script>

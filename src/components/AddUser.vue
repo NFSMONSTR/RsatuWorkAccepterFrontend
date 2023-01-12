@@ -133,7 +133,6 @@ export default {
       const names = result.data.map(g => g.name)
       this.groupNames.push(...names)
       this.groups = result.data
-      console.log(this.groupNames, this.groups, result.data.map(g => g.name))
     })
   },
   methods: {
@@ -172,12 +171,14 @@ export default {
             second_name: line[2],
             third_name: line[3],
             password: line[4],
-            group: +line[5],
+            group: line[5],
             year: +line[6],
             role: line[7]
           }
           if (user.group === '-') {
             user.group = null
+          } else {
+            user.group = +user.group
           }
           users.push(user)
         })

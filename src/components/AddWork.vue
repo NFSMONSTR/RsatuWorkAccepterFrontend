@@ -93,7 +93,7 @@
 
 <script>
 import VueMarkdown from 'vue-markdown'
-import VueMathjax from '@/components/VueMathjax'
+import VueMathjax from './util/VueMathjax'
 import AttachmentSelectDialog from "./dialogs/AttachmentSelectDialog.vue";
 
 export default {

@@ -40,11 +40,16 @@
 </template>
 
 <script>
-import AvatarDialog from '@/components/AvatarDialog'
+import AvatarDialog from './dialogs/AvatarDialog'
 export default {
   name: 'Profile',
   components: {AvatarDialog},
-  props: ['id'],
+  props: {
+    id: {
+      type: String,
+      default: "0",
+    }
+  },
   data: function () {
     return {
       user: {

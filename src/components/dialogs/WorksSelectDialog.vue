@@ -43,7 +43,7 @@
         <v-pagination
           :value="page"
           :length="count"
-          v-model:="page"
+          v-model="page"
           @input="load_works"
         />
       </div>

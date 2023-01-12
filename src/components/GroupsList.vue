@@ -111,10 +111,7 @@ export default {
   },
   methods: {
     del_group: function (group) {
-      this.$store.dispatch('DELETE_GROUP', group.id).then((result) => {
-        // todo use result
-        // const index = this.groups.indexOf(group)
-        // this.groups.splice(index, 1)
+      this.$store.dispatch('DELETE_GROUP', group.id).then(() => {
         this.load_groups()
       })
     },

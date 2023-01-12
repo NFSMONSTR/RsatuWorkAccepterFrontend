@@ -1,10 +1,11 @@
 <template>
-  <span ref="mathJaxEl">{{ formula}}</span>
+  <span ref="mathJaxEl">{{ formula }}</span>
 </template>
 
 <script>
 export default {
   name: 'VueMathjax',
+  // eslint-disable-next-line vue/require-prop-types
   props: ['formula'],
   watch: {
     formula () {

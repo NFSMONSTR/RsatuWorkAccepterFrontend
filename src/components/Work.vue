@@ -9,7 +9,7 @@
         <!--<v-avatar color="grey" class="mr-3" size="48"></v-avatar>-->
         <v-container 
           fluid 
-          style="padding-left:0px;">
+          style="padding-left:0">
           <v-layout row>
             <strong class="title">{{ work.name }} - {{ work.subject }}</strong>
           </v-layout>
@@ -98,9 +98,9 @@
 
 <script>
 
-import {CDN_URL} from '@/util/api'
+import {CDN_URL} from '../util/api'
 import VueMarkdown from 'vue-markdown'
-import VueMathjax from '@/components/VueMathjax'
+import VueMathjax from './util/VueMathjax'
 
 export default {
   name: 'Work',
@@ -108,7 +108,7 @@ export default {
     VueMarkdown,
     VueMathjax
   },
-  props: ['id'],
+  props: {id: {type: Number, default: 0}},
   data: function () {
     return {
       work: {
@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     delete_work: function () {
-      this.$store.dispatch('DELETE_WORK', this.work.id).then((result) => {
+      this.$store.dispatch('DELETE_WORK', this.work.id).then(() => {
         this.$router.push({ name: 'works_list' })
       })
     },

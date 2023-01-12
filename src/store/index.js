@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import {API_URL, CDN_URL} from '@/util/api'
+import {API_URL, CDN_URL} from '../util/api'
 import jwt_decode from 'jwt-decode';
 import permission_convert from "../util/permission_converter";
 Vue.use(Vuex)
@@ -27,7 +27,6 @@ async function apiCall (token, method, url, data, params = {}) {
 
 function getTokenInfo (token) {
   if ((token === '') || (token === undefined)) return false
-  console.log(jwt_decode(token))
   return jwt_decode(token)
 }
 
@@ -78,7 +77,7 @@ export default new Vuex.Store({
     userId: state => state.tokenInfo.user_id,
     user: state => state.user,
     avatarUrl: (state, getters) => getters.userAvatarUrl(getters.userId.toString()),
-    userAvatarUrl: state => userId => CDN_URL + '/avatar/' + userId.toString() + '.png'
+    userAvatarUrl: () => userId => CDN_URL + '/avatar/' + userId + '.png'
   },
   actions: {
     LOGIN: async (context, payload) => {
@@ -156,6 +155,7 @@ export default new Vuex.Store({
         // }
         context.commit('UPDATE_USER_INFO', result.data)
       } else {
+        // eslint-disable-next-line no-console
         console.error(result)
       }
     },
@@ -233,7 +233,6 @@ export default new Vuex.Store({
       return apiCall(context.getters.token, 'delete', '/attachment/' + payload.toString() + '/', {}).then()
     },
     ADD_AVATAR: async (context, payload) => {
-      console.log(payload)
       return apiCall(context.getters.token, 'post', '/avatar/', payload).then()
     },
     DELETE_AVATAR: async (context) => {

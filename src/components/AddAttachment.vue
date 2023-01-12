@@ -85,7 +85,6 @@ export default {
         const fr = new FileReader()
         fr.readAsDataURL(files[0])
         fr.addEventListener('load', () => {
-          console.log(fr.result, 'end')
           this.file_data = fr.result
         })
       } else {

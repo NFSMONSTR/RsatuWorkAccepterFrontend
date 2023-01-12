@@ -42,7 +42,12 @@
 <script>
 export default {
   name: 'PopupDialog',
-  props: ['open']
+  props: {
+    open: {
+      type: Boolean,
+      default: false,
+    }
+  },
 }
 </script>
 
