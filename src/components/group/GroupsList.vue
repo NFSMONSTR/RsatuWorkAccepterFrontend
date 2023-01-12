@@ -36,6 +36,7 @@
         <v-layout>
           <v-flex>
             <v-text-field
+              v-model="groupName"
               label="Название группы"
               required
             />
@@ -43,6 +44,7 @@
           <v-btn
             class="mt-3"
             color="success"
+            @click="load_named_groups"
           >
             {{ " Найти " }}
           </v-btn>
@@ -102,7 +104,8 @@ export default {
       alert_type: 'success',
       new_group_form: {
         name: '',
-      }
+      },
+      groupName: ''
     }
   },
 
@@ -132,6 +135,13 @@ export default {
     load_groups: function () {
       this.loading = true;
       this.$store.dispatch('GET_GROUPS').then((result) => {
+        this.groups = result.data
+        this.loading = false;
+      })
+    },
+    load_named_groups: function () {
+      this.loading = true;
+      this.$store.dispatch('GET_GROUPS', {name: this.groupName}).then((result) => {
         this.groups = result.data
         this.loading = false;
       })

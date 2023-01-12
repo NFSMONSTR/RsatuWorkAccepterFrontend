@@ -168,8 +168,12 @@ export default new Vuex.Store({
     GET_GROUP: async (context, payload) => {
       return apiCall(context.getters.token, 'get', '/group/' + payload.toString() + '/', {}).then()
     },
-    GET_GROUPS: async (context) => {
-      return apiCall(context.getters.token, 'get', '/group/', {}).then()
+    GET_GROUPS: async (context, payload) => {
+      if (payload) {
+        return apiCall(context.getters.token, 'get', '/group/', {}, {name: payload.name}).then()
+      } else {
+        return apiCall(context.getters.token, 'get', '/group/', {}).then()
+      }
     },
     DELETE_GROUP: async (context, payload) => {
       return apiCall(context.getters.token, 'delete', '/group/'+ payload.toString() + '/', {}).then()
