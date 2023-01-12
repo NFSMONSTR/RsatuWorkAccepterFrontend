@@ -1,5 +1,15 @@
 <template>
   <div>
+    <v-flex d-flex>
+      <v-select
+        :items="['Все', 'Оцененные', 'Без оценки']"
+        :value="rated"
+        hint="Работ на странице"
+        solo
+        class="ma-4"
+        @input="changedRate"
+      />
+    </v-flex>
     <template v-if="loading">
       <div class="text-xs-center pt-2">
         <v-progress-circular :indeterminate="loading"/>
@@ -17,6 +27,11 @@
               <v-list-tile-title>{{ item.work ? item.work.name : "" }}</v-list-tile-title>
               <v-list-tile-sub-title>{{ item.text }}</v-list-tile-sub-title>
             </v-list-tile-content>
+            <v-list-tile-avatar>
+              <v-icon 
+                v-if="item.commentId" 
+                color="green">rate_review</v-icon>
+            </v-list-tile-avatar>
           </v-list-tile>
         </template>
       </v-list>
@@ -43,6 +58,7 @@ export default {
       page: 10,
       count: -1,
       loading: true,
+      rated: 'Все',
     }
   },
   mounted () {
@@ -51,13 +67,26 @@ export default {
   methods: {
     load_works(page) {
       this.loading = true
-      this.$store.dispatch('GET_DONE_WORKS', {page: page, size: this.size}).then((result) => {
+      let payload = {page: page, size: this.size}
+      switch (this.rated) {
+        case 'Оцененные':
+          payload.rated = true
+          break
+        case 'Без оценки':
+          payload.rated = false
+          break
+      }
+      this.$store.dispatch('GET_DONE_WORKS', payload).then((result) => {
         this.doneWorks = result.data.data
         this.page = page
         this.count = result.data.count;
         this.loading = false;
       })
     },
+    changedRate(rate) {
+      this.rated = rate
+      this.load_works(this.page)
+    }
   }
 }
 </script>

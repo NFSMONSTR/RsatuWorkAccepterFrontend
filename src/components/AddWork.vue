@@ -56,22 +56,50 @@
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
+        <br>
+        <b v-if="attachments.length>0">Прикрепленные файлы и ссылки:</b>
+        <div v-if="attachments.length>0">
+          <v-chip
+            v-for="(attachment, i) in attachments"
+            :key="i"
+            :close="!loading"
+            @input="removeAttachment(attachment.id)">{{ attachment.name }}</v-chip>
+        </div>
 
-        <v-btn 
-          color="primary" 
+        <v-btn
+          v-if="!loading"
+          color="secondary"
+          @click="attachmentDialog = true">Прикрепить файл</v-btn>
+
+        <v-btn
+          v-if="!loading"
+          color="primary"
           @click="submit">Добавить работу</v-btn>
+
+        <div
+          v-if="loading"
+          class="text-xs-center pt-2">
+          <v-progress-circular :indeterminate="loading"/>
+        </div>
+
       </form>
     </v-card-text>
+    <attachment-select-dialog
+      :open="attachmentDialog"
+      @end="attachmentDialog = false"
+      @result="addAttachment"/>
   </v-card>
 </template>
 
 <script>
 import VueMarkdown from 'vue-markdown'
 import VueMathjax from '@/components/VueMathjax'
+import AttachmentSelectDialog from "./AttachmentSelectDialog.vue";
 
 export default {
   name: 'AddWork',
   components: {
+    AttachmentSelectDialog,
     VueMarkdown,
     VueMathjax
   },
@@ -84,12 +112,29 @@ export default {
         markup: 0,
         description: '',
         semestr: 1
-      }
+      },
+      attachments: [],
+      groups: [],
+      loading: false,
+      attachmentDialog: false,
     }
   },
   methods: {
+    addAttachment: function (result) {
+      if (this.attachments.map(a => a.id).indexOf(result.id) === -1) {
+        this.attachments.push(result)
+      }
+    },
+    removeAttachment: function (attachmentId) {
+      this.attachments = this.attachments.filter((item) => {return item.id !== attachmentId});
+    },
     submit: function () {
+      this.loading = true;
       this.$store.dispatch('ADD_WORK', this.work).then((result) => {
+        for (let attachment of this.doneWork.attachments) {
+          this.$store.dispatch('CONNECT_ATTACHMENT', {connectionId: result.data.id, attachmentId: attachment.id, connectionType: 'WORK'})
+        }
+        this.loading = false;
         this.$router.push({ name: 'works_list' })
       })
     }
