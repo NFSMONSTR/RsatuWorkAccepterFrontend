@@ -4,7 +4,7 @@
       <v-select
         :items="['Все', 'Оцененные', 'Без оценки']"
         :value="rated"
-        hint="Работ на странице"
+        hint="Оценка"
         solo
         class="ma-4"
         @input="changedRate"
